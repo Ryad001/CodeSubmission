@@ -5,17 +5,20 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Student Code Submission</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Rajdhani:wght@500;600;700&display=swap"
+    rel="stylesheet">
   <style>
     :root {
-      --bg-color: #0f1117;
-      --card-bg: rgba(25, 28, 36, 0.6);
-      --border-color: rgba(255, 255, 255, 0.1);
-      --text-main: #f3f4f6;
-      --text-muted: #9ca3af;
-      --accent-1: #6366f1;
-      --accent-2: #8b5cf6;
-      --accent-3: #ec4899;
+      --bg-base: #000000;
+      --grid-color: rgba(255, 255, 255, 0.2);
+      --card-bg: rgba(15, 15, 15, 0.8);
+      --border-glow: rgba(255, 255, 255, 0.6);
+      --text-main: #ffffff;
+      --accent-neon: #ffffff;
+      --button-bg: #ffffff;
+      --button-text: #000000;
+      --button-hover: #e0e0e0;
     }
 
     * {
@@ -25,38 +28,138 @@
     }
 
     body {
-      font-family: 'Inter', sans-serif;
-      background-color: var(--bg-color);
+      font-family: 'Rajdhani', sans-serif;
+      background-color: var(--bg-base);
       color: var(--text-main);
       min-height: 100vh;
       display: flex;
+      flex-direction: column;
       align-items: center;
-      justify-content: center;
-      background-image:
-        radial-gradient(circle at 15% 50%, rgba(99, 102, 241, 0.15), transparent 25%),
-        radial-gradient(circle at 85% 30%, rgba(139, 92, 246, 0.15), transparent 25%);
+      justify-content: space-between;
       padding: 20px;
+      overflow-x: hidden;
+      overflow-y: auto;
     }
 
-    .container {
-      width: 100%;
-      max-width: 500px;
-      background: var(--card-bg);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      border: 1px solid var(--border-color);
-      border-radius: 24px;
-      padding: 40px;
-      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-      animation: fadeIn 0.8s ease-out;
+    /* Moving Grid Animation */
+    .grid-bg {
+      position: fixed;
+      width: 200vw;
+      height: 200vh;
+      bottom: -40%;
+      left: -50%;
+      background-image:
+        linear-gradient(var(--grid-color) 2px, transparent 2px),
+        linear-gradient(90deg, var(--grid-color) 2px, transparent 2px);
+      background-size: 50px 50px;
+      transform: perspective(600px) rotateX(60deg);
+      animation: gridMove 3s linear infinite;
+      z-index: -2;
     }
 
-    @keyframes fadeIn {
+    .vignette {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: radial-gradient(circle at center, transparent 30%, var(--bg-base) 100%);
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    @keyframes gridMove {
       from {
-        opacity: 0;
-        transform: translateY(20px);
+        background-position: 0 0;
       }
 
+      to {
+        background-position: 0 50px;
+      }
+    }
+
+    .main-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      flex: 1;
+      width: 100%;
+      justify-content: center;
+    }
+
+    /* Logo styling */
+    .logo-container {
+      margin-bottom: 30px;
+      z-index: 10;
+      display: flex;
+      justify-content: center;
+      background: rgba(255, 255, 255, 0.95);
+      padding: 15px 30px;
+      border-radius: 16px;
+      box-shadow: 0 0 20px rgba(255, 255, 255, 0.4);
+      border: 2px solid var(--accent-neon);
+      animation: floatLogo 4s ease-in-out infinite;
+      filter: grayscale(100%);
+    }
+
+    .logo-container img {
+      max-height: 120px;
+      width: auto;
+      object-fit: contain;
+    }
+
+    @keyframes floatLogo {
+
+      0%,
+      100% {
+        transform: translateY(0);
+        box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+      }
+
+      50% {
+        transform: translateY(-10px);
+        box-shadow: 0 0 30px rgba(255, 255, 255, 0.6);
+      }
+    }
+
+    .container,
+    #loading-screen,
+    #offline-screen {
+      width: 100%;
+      max-width: 550px;
+      background: var(--card-bg);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 16px;
+      padding: 40px;
+      box-shadow: 0 0 40px rgba(255, 255, 255, 0.1), inset 0 0 20px rgba(255, 255, 255, 0.05);
+      position: relative;
+      z-index: 10;
+      animation: slideUp 0.8s ease-out forwards;
+      opacity: 0;
+      transform: translateY(30px);
+    }
+
+    #loading-screen,
+    #offline-screen {
+      text-align: center;
+      display: none;
+    }
+
+    #offline-screen p {
+      font-size: 18px;
+      color: rgba(255, 255, 255, 0.8);
+      font-family: 'Rajdhani', sans-serif;
+      line-height: 1.6;
+    }
+
+    #loading-screen h2,
+    #offline-screen h2 {
+      margin-bottom: 15px;
+    }
+
+    @keyframes slideUp {
       to {
         opacity: 1;
         transform: translateY(0);
@@ -65,13 +168,14 @@
 
     h2 {
       text-align: center;
-      font-size: 28px;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 26px;
       font-weight: 700;
       margin-bottom: 30px;
-      background: linear-gradient(135deg, var(--text-main) 0%, var(--text-muted) 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      letter-spacing: -0.5px;
+      color: #fff;
+      text-shadow: 0 0 10px var(--border-glow), 0 0 20px var(--accent-neon);
+      text-transform: uppercase;
+      letter-spacing: 2px;
     }
 
     .form-group {
@@ -83,12 +187,12 @@
     select,
     textarea {
       width: 100%;
-      background: rgba(0, 0, 0, 0.2);
-      border: 1px solid var(--border-color);
-      border-radius: 12px;
+      background: rgba(0, 0, 0, 0.6);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      border-radius: 8px;
       padding: 14px 16px;
-      color: var(--text-main);
-      font-size: 15px;
+      color: #fff;
+      font-size: 16px;
       font-family: inherit;
       transition: all 0.3s ease;
       outline: none;
@@ -104,19 +208,19 @@
     input:focus,
     select:focus,
     textarea:focus {
-      border-color: var(--accent-1);
-      box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1);
-      background: rgba(0, 0, 0, 0.3);
+      border-color: var(--accent-neon);
+      box-shadow: 0 0 15px rgba(255, 255, 255, 0.4);
+      background: rgba(30, 30, 30, 0.9);
     }
 
     input::placeholder,
     textarea::placeholder {
-      color: #6b7280;
+      color: rgba(255, 255, 255, 0.4);
     }
 
     select {
       appearance: none;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%239ca3af' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23ffffff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
       background-repeat: no-repeat;
       background-position: right 16px center;
       background-size: 16px;
@@ -124,23 +228,27 @@
     }
 
     select option {
-      background-color: var(--bg-color);
-      color: var(--text-main);
+      background-color: #000;
+      color: #fff;
     }
 
     button {
       width: 100%;
       padding: 16px;
-      background: linear-gradient(135deg, var(--accent-1) 0%, var(--accent-2) 100%);
-      color: white;
-      border: none;
-      border-radius: 12px;
-      font-size: 16px;
-      font-weight: 600;
+      background: var(--button-bg);
+      color: var(--button-text);
+      border: 1px solid var(--accent-neon);
+      border-radius: 8px;
+      font-size: 18px;
+      font-family: 'Orbitron', sans-serif;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
       cursor: pointer;
       transition: all 0.3s ease;
       position: relative;
       overflow: hidden;
+      box-shadow: 0 0 15px rgba(255, 255, 255, 0.4);
     }
 
     button::before {
@@ -150,26 +258,24 @@
       left: -100%;
       width: 100%;
       height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+      background: linear-gradient(90deg, transparent, rgba(0, 0, 0, 0.2), transparent);
       transition: 0.5s;
     }
 
     button:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 20px rgba(99, 102, 241, 0.3);
+      background: var(--button-hover);
+      box-shadow: 0 0 30px var(--accent-neon);
+      transform: scale(1.02);
     }
 
     button:hover::before {
       left: 100%;
     }
 
-    button:active {
-      transform: translateY(0);
-    }
-
     #status {
       text-align: center;
       margin-top: 20px;
+      font-family: 'Orbitron', sans-serif;
       font-size: 14px;
       font-weight: 500;
       min-height: 21px;
@@ -177,53 +283,145 @@
     }
 
     .status-success {
-      color: #34d399;
+      color: #fff;
+      text-shadow: 0 0 10px #fff;
+      font-weight: 700;
     }
 
     .status-error {
-      color: #f87171;
+      color: #fff;
+      text-shadow: 0 0 10px #fff, 0 0 2px #fff;
+      font-weight: 700;
+      text-decoration: underline;
+    }
+
+    /* Footer styling */
+    .designer-footer {
+      width: 100%;
+      text-align: center;
+      padding: 20px 0;
+      margin-top: 20px;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 11px;
+      letter-spacing: 2px;
+      color: rgba(255, 255, 255, 0.5);
+      text-transform: uppercase;
+      z-index: 10;
+    }
+
+    .designer-footer span {
+      color: #fff;
+      font-weight: 700;
+      text-shadow: 0 0 8px rgba(255, 255, 255, 0.4);
     }
   </style>
 </head>
 
 <body>
 
-  <div class="container">
-    <h2>Student Code Submission</h2>
+  <div class="grid-bg"></div>
+  <div class="vignette"></div>
 
-    <form id="form">
-      <div class="form-group">
-        <input type="text" id="name" placeholder="Full Name" required>
-      </div>
+  <div class="main-wrapper">
+    <div class="logo-container">
+      <img src="xcd.png" onerror="this.onerror=null; this.src='logo.png';" alt="International Academy of Iraq">
+    </div>
 
-      <div class="form-group">
-        <select id="grade" required>
-          <option value="" disabled selected>Select Grade</option>
-          <option value="7">Grade 7</option>
-          <option value="8">Grade 8</option>
-        </select>
-      </div>
+    <!-- Loading Screen -->
+    <div id="loading-screen" style="display: block;">
+      <h2>SYSTEM STATUS</h2>
+      <p style="color: rgba(255,255,255,0.7); font-size: 18px;">Checking uplink with server...</p>
+    </div>
 
-      <div class="form-group">
-        <select id="section" required>
-          <option value="" disabled selected>Select Section</option>
-          <option value="A">Section A</option>
-          <option value="B">Section B</option>
-        </select>
-      </div>
+    <!-- Offline Screen -->
+    <div id="offline-screen">
+      <h2>PORTAL CLOSED</h2>
+      <p>The submission portal is currently offline.<br>Please wait for the teacher to open it.</p>
+    </div>
 
-      <div class="form-group">
-        <textarea id="code" placeholder="Paste your code here..." required></textarea>
-      </div>
+    <!-- Submission Form -->
+    <div class="container" id="form-container" style="display: none;">
+      <h2>Code Submission</h2>
 
-      <button type="submit" id="submitBtn">Submit Code</button>
-    </form>
+      <form id="form">
+        <div class="form-group">
+          <input type="text" id="name" placeholder="Full Name" required>
+        </div>
 
-    <p id="status"></p>
+        <div class="form-group">
+          <select id="grade" required>
+            <option value="" disabled selected>Select Grade</option>
+            <option value="6">Grade 6</option>
+            <option value="7">Grade 7</option>
+            <option value="8">Grade 8</option>
+            <option value="9">Grade 9</option>
+            <option value="10">Grade 10</option>
+            <option value="11">Grade 11</option>
+            <option value="12">Grade 12</option>
+            <option value="College">College</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <select id="section" required>
+            <option value="" disabled selected>Select Section</option>
+            <option value="A">Section A</option>
+            <option value="B">Section B</option>
+            <option value="C">Section C</option>
+            <option value="D">Section D</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <textarea id="code" placeholder="Paste your code here..." required></textarea>
+        </div>
+
+        <button type="submit" id="submitBtn">Submit Code</button>
+      </form>
+
+      <p id="status"></p>
+    </div>
   </div>
 
+  <footer class="designer-footer">
+    Created by <span>Ryad Amghar</span> <br> ICT Teacher & Technical Support
+  </footer>
+
   <script>
-    const scriptURL = "https://script.google.com/macros/s/AKfycbxf8kzgIjxYl5bsssy0Vuyek5Tmvku2kAFgLonKzj1FA4q9VzoDsyScwFO03Efi3jFr/exec";
+    const scriptURL = "https://script.google.com/macros/s/AKfycbyckvAa_EVx9nzNoPrU83BTPo0wKRJ9VrQ0uPzM1lRFtno1NMPF8AQLScA9ZqS0jOgO/exec";
+
+    document.addEventListener("DOMContentLoaded", async () => {
+      const loadingScreen = document.getElementById("loading-screen");
+      const offlineScreen = document.getElementById("offline-screen");
+      const formContainer = document.getElementById("form-container");
+
+      try {
+        // Fetch server status. Appends ?action=status so Apps Script can handle GET separately
+        const response = await fetch(scriptURL + "?action=status");
+
+        // Wait, since fetch cross-origin will throw CORS for Google Apps Script 
+        // without proper doGet handlers, catching allows us to fallback.
+        const data = await response.json();
+
+        loadingScreen.style.display = "none";
+
+        if (data && data.status && data.status.toLowerCase().trim() === "online") {
+          formContainer.style.display = "block";
+        } else {
+          // It's offline or anything else
+          offlineScreen.style.display = "block";
+        }
+
+      } catch (err) {
+        console.error("Status fetch failed", err);
+        // By default, if the script isn't updated yet to handle "?action=status",
+        // the fetch might fail. Right now, it's safer to show the offline screen.
+        loadingScreen.style.display = "none";
+        offlineScreen.style.display = "block";
+        offlineScreen.innerHTML = "<h2>CONNECTION FAILED</h2><p>Unable to connect to Google Apps Script. Please verify the backend script.</p>";
+      }
+    });
+
     const statusEl = document.getElementById("status");
     const submitBtn = document.getElementById("submitBtn");
 
