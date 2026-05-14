@@ -1,32 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Student Code Submission</title>
-  <link
-    href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Rajdhani:wght@500;600;700&display=swap"
-    rel="stylesheet">
+  <title>Student Submission Portal</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
       --bg-base: #000000;
-      --grid-color: rgba(255, 255, 255, 0.2);
-      --card-bg: rgba(15, 15, 15, 0.8);
-      --border-glow: rgba(255, 255, 255, 0.6);
+      --grid-color: rgba(255,255,255,0.2);
+      --card-bg: rgba(15,15,15,0.8);
+      --border-glow: rgba(255,255,255,0.6);
       --text-main: #ffffff;
       --accent-neon: #ffffff;
       --button-bg: #ffffff;
       --button-text: #000000;
       --button-hover: #e0e0e0;
     }
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
+    * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
       font-family: 'Rajdhani', sans-serif;
       background-color: var(--bg-base);
@@ -40,297 +31,174 @@
       overflow-x: hidden;
       overflow-y: auto;
     }
-
-    /* Moving Grid Animation */
     .grid-bg {
       position: fixed;
       width: 200vw;
       height: 200vh;
       bottom: -40%;
       left: -50%;
-      background-image:
-        linear-gradient(var(--grid-color) 2px, transparent 2px),
-        linear-gradient(90deg, var(--grid-color) 2px, transparent 2px);
+      background-image: linear-gradient(var(--grid-color) 2px, transparent 2px), linear-gradient(90deg, var(--grid-color) 2px, transparent 2px);
       background-size: 50px 50px;
       transform: perspective(600px) rotateX(60deg);
       animation: gridMove 3s linear infinite;
       z-index: -2;
     }
-
     .vignette {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
+      position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
       background: radial-gradient(circle at center, transparent 30%, var(--bg-base) 100%);
-      z-index: -1;
-      pointer-events: none;
+      z-index: -1; pointer-events: none;
     }
+    @keyframes gridMove { from { background-position: 0 0; } to { background-position: 0 50px; } }
 
-    @keyframes gridMove {
-      from {
-        background-position: 0 0;
-      }
+    .main-wrapper { display: flex; flex-direction: column; align-items: center; flex: 1; width: 100%; justify-content: center; }
 
-      to {
-        background-position: 0 50px;
-      }
-    }
-
-    .main-wrapper {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      flex: 1;
-      width: 100%;
-      justify-content: center;
-    }
-
-    /* Logo styling */
     .logo-container {
-      margin-bottom: 30px;
-      z-index: 10;
-      display: flex;
-      justify-content: center;
-      background: rgba(255, 255, 255, 0.95);
-      padding: 15px 30px;
-      border-radius: 16px;
-      box-shadow: 0 0 20px rgba(255, 255, 255, 0.4);
-      border: 2px solid var(--accent-neon);
-      animation: floatLogo 4s ease-in-out infinite;
-      filter: grayscale(100%);
+      margin-bottom: 30px; z-index: 10; display: flex; justify-content: center;
+      background: rgba(255,255,255,0.95); padding: 15px 30px; border-radius: 16px;
+      box-shadow: 0 0 20px rgba(255,255,255,0.4); border: 2px solid var(--accent-neon);
+      animation: floatLogo 4s ease-in-out infinite; filter: grayscale(100%);
     }
-
-    .logo-container img {
-      max-height: 120px;
-      width: auto;
-      object-fit: contain;
-    }
-
+    .logo-container img { max-height: 120px; width: auto; object-fit: contain; }
     @keyframes floatLogo {
-
-      0%,
-      100% {
-        transform: translateY(0);
-        box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
-      }
-
-      50% {
-        transform: translateY(-10px);
-        box-shadow: 0 0 30px rgba(255, 255, 255, 0.6);
-      }
+      0%,100% { transform: translateY(0); box-shadow: 0 0 15px rgba(255,255,255,0.3); }
+      50% { transform: translateY(-10px); box-shadow: 0 0 30px rgba(255,255,255,0.6); }
     }
 
-    .container,
-    #loading-screen,
-    #offline-screen {
-      width: 100%;
-      max-width: 550px;
-      background: var(--card-bg);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      border-radius: 16px;
-      padding: 40px;
-      box-shadow: 0 0 40px rgba(255, 255, 255, 0.1), inset 0 0 20px rgba(255, 255, 255, 0.05);
-      position: relative;
-      z-index: 10;
-      animation: slideUp 0.8s ease-out forwards;
-      opacity: 0;
-      transform: translateY(30px);
+    .container, #loading-screen, #offline-screen {
+      width: 100%; max-width: 550px;
+      background: var(--card-bg); backdrop-filter: blur(12px);
+      border: 1px solid rgba(255,255,255,0.2); border-radius: 16px; padding: 40px;
+      box-shadow: 0 0 40px rgba(255,255,255,0.1), inset 0 0 20px rgba(255,255,255,0.05);
+      position: relative; z-index: 10;
+      animation: slideUp 0.8s ease-out forwards; opacity: 0; transform: translateY(30px);
     }
-
-    #loading-screen,
-    #offline-screen {
-      text-align: center;
-      display: none;
-    }
-
-    #offline-screen p {
-      font-size: 18px;
-      color: rgba(255, 255, 255, 0.8);
-      font-family: 'Rajdhani', sans-serif;
-      line-height: 1.6;
-    }
-
-    #loading-screen h2,
-    #offline-screen h2 {
-      margin-bottom: 15px;
-    }
-
-    @keyframes slideUp {
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
+    #loading-screen, #offline-screen { text-align: center; display: none; }
+    #offline-screen p { font-size: 18px; color: rgba(255,255,255,0.8); font-family: 'Rajdhani', sans-serif; line-height: 1.6; }
+    #loading-screen h2, #offline-screen h2 { margin-bottom: 15px; }
+    @keyframes slideUp { to { opacity: 1; transform: translateY(0); } }
 
     h2 {
-      text-align: center;
-      font-family: 'Orbitron', sans-serif;
-      font-size: 26px;
-      font-weight: 700;
-      margin-bottom: 30px;
-      color: #fff;
+      text-align: center; font-family: 'Orbitron', sans-serif; font-size: 24px; font-weight: 700;
+      margin-bottom: 28px; color: #fff;
       text-shadow: 0 0 10px var(--border-glow), 0 0 20px var(--accent-neon);
-      text-transform: uppercase;
-      letter-spacing: 2px;
+      text-transform: uppercase; letter-spacing: 2px;
     }
+    .form-group { margin-bottom: 20px; position: relative; }
 
-    .form-group {
-      margin-bottom: 20px;
-      position: relative;
+    input, select, textarea {
+      width: 100%; background: rgba(0,0,0,0.6); border: 1px solid rgba(255,255,255,0.3);
+      border-radius: 8px; padding: 14px 16px; color: #fff; font-size: 16px;
+      font-family: inherit; transition: all 0.3s ease; outline: none;
     }
-
-    input,
-    select,
-    textarea {
-      width: 100%;
-      background: rgba(0, 0, 0, 0.6);
-      border: 1px solid rgba(255, 255, 255, 0.3);
-      border-radius: 8px;
-      padding: 14px 16px;
-      color: #fff;
-      font-size: 16px;
-      font-family: inherit;
-      transition: all 0.3s ease;
-      outline: none;
+    textarea { height: 160px; resize: vertical; font-family: 'Courier New', Courier, monospace; line-height: 1.5; }
+    input:focus, select:focus, textarea:focus {
+      border-color: var(--accent-neon); box-shadow: 0 0 15px rgba(255,255,255,0.4);
+      background: rgba(30,30,30,0.9);
     }
-
-    textarea {
-      height: 160px;
-      resize: vertical;
-      font-family: 'Courier New', Courier, monospace;
-      line-height: 1.5;
-    }
-
-    input:focus,
-    select:focus,
-    textarea:focus {
-      border-color: var(--accent-neon);
-      box-shadow: 0 0 15px rgba(255, 255, 255, 0.4);
-      background: rgba(30, 30, 30, 0.9);
-    }
-
-    input::placeholder,
-    textarea::placeholder {
-      color: rgba(255, 255, 255, 0.4);
-    }
-
+    input::placeholder, textarea::placeholder { color: rgba(255,255,255,0.4); }
     select {
       appearance: none;
       background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23ffffff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
-      background-repeat: no-repeat;
-      background-position: right 16px center;
-      background-size: 16px;
-      padding-right: 40px;
+      background-repeat: no-repeat; background-position: right 16px center; background-size: 16px; padding-right: 40px;
     }
+    select option { background-color: #000; color: #fff; }
 
-    select option {
-      background-color: #000;
-      color: #fff;
+    button.main-btn {
+      width: 100%; padding: 16px; background: var(--button-bg); color: var(--button-text);
+      border: 1px solid var(--accent-neon); border-radius: 8px; font-size: 18px;
+      font-family: 'Orbitron', sans-serif; font-weight: 700; letter-spacing: 1.5px;
+      text-transform: uppercase; cursor: pointer; transition: all 0.3s ease;
+      position: relative; overflow: hidden; box-shadow: 0 0 15px rgba(255,255,255,0.4);
     }
+    button.main-btn::before {
+      content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(0,0,0,0.2), transparent); transition: 0.5s;
+    }
+    button.main-btn:hover { background: var(--button-hover); box-shadow: 0 0 30px var(--accent-neon); transform: scale(1.02); }
+    button.main-btn:hover::before { left: 100%; }
 
-    button {
-      width: 100%;
-      padding: 16px;
-      background: var(--button-bg);
-      color: var(--button-text);
-      border: 1px solid var(--accent-neon);
-      border-radius: 8px;
-      font-size: 18px;
-      font-family: 'Orbitron', sans-serif;
-      font-weight: 700;
-      letter-spacing: 1.5px;
-      text-transform: uppercase;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      position: relative;
-      overflow: hidden;
-      box-shadow: 0 0 15px rgba(255, 255, 255, 0.4);
+    button.grade5-btn {
+      width: 100%; padding: 16px; background: transparent; color: #fff;
+      border: 1px solid rgba(255,255,255,0.4); border-radius: 8px; font-size: 16px;
+      font-family: 'Orbitron', sans-serif; font-weight: 700; letter-spacing: 1.5px;
+      text-transform: uppercase; cursor: pointer; transition: all 0.3s ease;
+      margin-top: 14px;
     }
+    button.grade5-btn:hover { background: rgba(255,255,255,0.08); border-color: #fff; box-shadow: 0 0 20px rgba(255,255,255,0.3); }
 
-    button::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: -100%;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(0, 0, 0, 0.2), transparent);
-      transition: 0.5s;
+    .section-label {
+      font-size: 11px; letter-spacing: 2px; color: rgba(255,255,255,0.4);
+      text-transform: uppercase; margin-bottom: 10px; display: block;
     }
-
-    button:hover {
-      background: var(--button-hover);
-      box-shadow: 0 0 30px var(--accent-neon);
-      transform: scale(1.02);
-    }
-
-    button:hover::before {
-      left: 100%;
-    }
+    .divider { border: none; border-top: 1px solid rgba(255,255,255,0.1); margin: 20px 0; }
 
     #status {
-      text-align: center;
-      margin-top: 20px;
-      font-family: 'Orbitron', sans-serif;
-      font-size: 14px;
-      font-weight: 500;
-      min-height: 21px;
-      transition: opacity 0.3s ease;
+      text-align: center; margin-top: 20px; font-family: 'Orbitron', sans-serif;
+      font-size: 14px; font-weight: 500; min-height: 21px; transition: opacity 0.3s ease;
     }
+    .status-success { color: #fff; text-shadow: 0 0 10px #fff; font-weight: 700; }
+    .status-error { color: #fff; text-shadow: 0 0 10px #fff; font-weight: 700; text-decoration: underline; }
 
-    .status-success {
-      color: #fff;
-      text-shadow: 0 0 10px #fff;
-      font-weight: 700;
+    /* Quiz styles */
+    .quiz-screen { display: none; }
+    .back-btn {
+      background: transparent; border: none; color: rgba(255,255,255,0.5);
+      font-size: 13px; cursor: pointer; padding: 0; margin-bottom: 16px;
+      font-family: 'Rajdhani', sans-serif; display: block;
     }
+    .back-btn:hover { color: #fff; }
+    .quiz-stats { display: flex; gap: 10px; margin-bottom: 20px; }
+    .quiz-stat { flex: 1; background: rgba(255,255,255,0.07); border-radius: 8px; padding: 10px; text-align: center; font-size: 12px; color: rgba(255,255,255,0.5); }
+    .quiz-stat strong { display: block; font-size: 22px; font-weight: 700; color: #fff; margin-bottom: 2px; }
 
-    .status-error {
-      color: #fff;
-      text-shadow: 0 0 10px #fff, 0 0 2px #fff;
-      font-weight: 700;
-      text-decoration: underline;
+    .progress-bar-wrap { background: rgba(255,255,255,0.1); height: 4px; border-radius: 4px; margin-bottom: 18px; }
+    .progress-bar { height: 100%; background: #fff; border-radius: 4px; transition: width 0.3s ease; }
+    .q-meta { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; }
+    .q-num { font-size: 13px; color: rgba(255,255,255,0.5); font-family: 'Rajdhani', sans-serif; }
+    .q-type-badge { font-size: 10px; letter-spacing: 2px; background: rgba(255,255,255,0.1); padding: 4px 10px; border-radius: 20px; text-transform: uppercase; }
+
+    .q-text { font-size: 17px; font-weight: 600; margin-bottom: 18px; line-height: 1.5; font-family: 'Rajdhani', sans-serif; }
+    .opt-btn {
+      width: 100%; padding: 12px 14px; margin-bottom: 8px; background: rgba(255,255,255,0.07);
+      color: #fff; border: 1px solid rgba(255,255,255,0.15); border-radius: 8px;
+      font-size: 14px; text-align: left; cursor: pointer; transition: all 0.15s;
+      font-family: 'Rajdhani', sans-serif; font-weight: 600;
     }
+    .opt-btn:hover { background: rgba(255,255,255,0.13); border-color: rgba(255,255,255,0.35); }
+    .opt-btn.selected { background: rgba(255,255,255,0.22); border-color: rgba(255,255,255,0.7); }
+    .short-input {
+      width: 100%; height: 90px; background: rgba(0,0,0,0.5);
+      border: 1px solid rgba(255,255,255,0.25); border-radius: 8px;
+      padding: 12px; color: #fff; font-size: 14px; resize: vertical;
+      font-family: 'Rajdhani', sans-serif; outline: none; margin-bottom: 0;
+    }
+    .short-input:focus { border-color: #fff; }
 
-    /* Footer styling */
+    .done-icon { font-size: 56px; text-align: center; margin-bottom: 14px; }
+    .done-title { font-family: 'Orbitron', sans-serif; font-size: 22px; text-align: center; margin-bottom: 8px; }
+    .done-sub { text-align: center; color: rgba(255,255,255,0.55); font-size: 15px; line-height: 1.6; }
+
     .designer-footer {
-      width: 100%;
-      text-align: center;
-      padding: 20px 0;
-      margin-top: 20px;
-      font-family: 'Orbitron', sans-serif;
-      font-size: 11px;
-      letter-spacing: 2px;
-      color: rgba(255, 255, 255, 0.5);
-      text-transform: uppercase;
-      z-index: 10;
+      width: 100%; text-align: center; padding: 20px 0; margin-top: 20px;
+      font-family: 'Orbitron', sans-serif; font-size: 11px; letter-spacing: 2px;
+      color: rgba(255,255,255,0.5); text-transform: uppercase; z-index: 10;
     }
-
-    .designer-footer span {
-      color: #fff;
-      font-weight: 700;
-      text-shadow: 0 0 8px rgba(255, 255, 255, 0.4);
-    }
+    .designer-footer span { color: #fff; font-weight: 700; text-shadow: 0 0 8px rgba(255,255,255,0.4); }
   </style>
 </head>
-
 <body>
-
   <div class="grid-bg"></div>
   <div class="vignette"></div>
 
   <div class="main-wrapper">
     <div class="logo-container">
-      <img src="xcd.png" onerror="this.onerror=null; this.src='logo.png';" alt="International Academy of Iraq">
+      <img src="xcd.png" onerror="this.onerror=null;this.src='logo.png';" alt="International Academy of Iraq">
     </div>
 
     <!-- Loading Screen -->
-    <div id="loading-screen" style="display: block;">
+    <div id="loading-screen" style="display:block;">
       <h2>SYSTEM STATUS</h2>
-      <p style="color: rgba(255,255,255,0.7); font-size: 18px;">Checking uplink with server...</p>
+      <p style="color:rgba(255,255,255,0.7);font-size:18px;">Checking uplink with server...</p>
     </div>
 
     <!-- Offline Screen -->
@@ -339,15 +207,13 @@
       <p>The submission portal is currently offline.<br>Please wait for the teacher to open it.</p>
     </div>
 
-    <!-- Submission Form -->
-    <div class="container" id="form-container" style="display: none;">
-      <h2>Code Submission</h2>
+    <!-- Main Form (Code Submission for Grade 7 & 8) -->
+    <div class="container" id="form-container" style="display:none;">
+      <h2>Submission Portal</h2>
 
-      <form id="form">
-        <div class="form-group">
-          <input type="text" id="name" placeholder="Full Name" required>
-        </div>
-
+      <span class="section-label">Code Submission — Grade 7 &amp; 8</span>
+      <form id="code-form">
+        <div class="form-group"><input type="text" id="name" placeholder="Full Name" required></div>
         <div class="form-group">
           <select id="grade" required>
             <option value="" disabled selected>Select Grade</option>
@@ -355,7 +221,6 @@
             <option value="8">Grade 8</option>
           </select>
         </div>
-
         <div class="form-group">
           <select id="section" required>
             <option value="" disabled selected>Select Section</option>
@@ -363,96 +228,292 @@
             <option value="B">Section B</option>
           </select>
         </div>
-
-        <div class="form-group">
-          <textarea id="code" placeholder="Paste your code here..." required></textarea>
-        </div>
-
-        <button type="submit" id="submitBtn">Submit Code</button>
+        <div class="form-group"><textarea id="code" placeholder="Paste your code here..." required></textarea></div>
+        <button type="submit" class="main-btn" id="submitBtn">Submit Code</button>
       </form>
-
       <p id="status"></p>
+
+      <hr class="divider">
+
+      <span class="section-label">Scratch Quiz — Grade 5</span>
+      <button class="grade5-btn" onclick="showScreen('quiz-info')">📝 &nbsp; Grade 5 — Take Scratch Exam</button>
+    </div>
+
+    <!-- Quiz: Student Info -->
+    <div class="container quiz-screen" id="quiz-info">
+      <button class="back-btn" onclick="showScreen('form-container')">← Back</button>
+      <h2>Grade 5 Scratch Quiz</h2>
+      <div class="quiz-stats">
+        <div class="quiz-stat"><strong>30</strong>MCQ</div>
+        <div class="quiz-stat"><strong>10</strong>True / False</div>
+        <div class="quiz-stat"><strong>5</strong>Short Answer</div>
+      </div>
+      <div class="form-group"><input type="text" id="q5-name" placeholder="Full Name" required></div>
+      <div class="form-group">
+        <select id="q5-section" required>
+          <option value="" disabled selected>Select Section</option>
+          <option value="A">Section A</option>
+          <option value="B">Section B</option>
+          <option value="C">Section C</option>
+          <option value="D">Section D</option>
+        </select>
+      </div>
+      <button class="main-btn" onclick="startQuiz()">Start Exam</button>
+    </div>
+
+    <!-- Quiz: Question Screen -->
+    <div class="container quiz-screen" id="quiz-question">
+      <div class="q-meta">
+        <span class="q-num" id="q-counter">Question 1 of 45</span>
+        <span class="q-type-badge" id="q-type-badge">MCQ</span>
+      </div>
+      <div class="progress-bar-wrap"><div class="progress-bar" id="q-progress"></div></div>
+      <p class="q-text" id="q-text"></p>
+      <div id="q-options"></div>
+      <div id="q-short-wrap" style="display:none;">
+        <textarea class="short-input" id="q-short-input" placeholder="Write your answer here..."></textarea>
+      </div>
+      <div style="display:flex;gap:10px;margin-top:16px;">
+        <button class="main-btn" id="btn-prev" onclick="prevQuestion()" style="width:auto;padding:16px 22px;background:transparent;color:#fff;border:1px solid rgba(255,255,255,0.3);">←</button>
+        <button class="main-btn" id="btn-next" onclick="nextQuestion()" style="flex:1;">Next</button>
+      </div>
+    </div>
+
+    <!-- Quiz: Submitting -->
+    <div class="container quiz-screen" id="quiz-submitting" style="text-align:center;padding:50px 40px;">
+      <h2>SUBMITTING...</h2>
+      <p style="color:rgba(255,255,255,0.5);font-size:16px;">Please wait while your exam is saved.</p>
+    </div>
+
+    <!-- Quiz: Done -->
+    <div class="container quiz-screen" id="quiz-done" style="padding:50px 40px;">
+      <div class="done-icon">✓</div>
+      <div class="done-title">Exam Submitted!</div>
+      <p class="done-sub" id="done-details"></p>
     </div>
   </div>
 
   <footer class="designer-footer">
-    Created by <span>Ryad Amghar</span> <br> ICT Teacher & Technical Support
+    Created by <span>Ryad Amghar</span><br>ICT Teacher &amp; Technical Support
   </footer>
 
-  <script>
-    const scriptURL = "https://script.google.com/macros/s/AKfycbyckvAa_EVx9nzNoPrU83BTPo0wKRJ9VrQ0uPzM1lRFtno1NMPF8AQLScA9ZqS0jOgO/exec";
+<script>
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzIZzmfRjlBG8oKeggl10lXx-7Vo_QhrVTy5XHostxl8JPOMu_ss3w2pZQKmsxpBg/exec";
 
-    document.addEventListener("DOMContentLoaded", async () => {
-      const loadingScreen = document.getElementById("loading-screen");
-      const offlineScreen = document.getElementById("offline-screen");
-      const formContainer = document.getElementById("form-container");
+// ── Portal status check ──────────────────────────────────────────────────────
+document.addEventListener("DOMContentLoaded", async () => {
+  const loadingScreen = document.getElementById("loading-screen");
+  const offlineScreen = document.getElementById("offline-screen");
+  const formContainer = document.getElementById("form-container");
+  try {
+    const response = await fetch(SCRIPT_URL + "?action=status");
+    const data = await response.json();
+    loadingScreen.style.display = "none";
+    if (data && data.status && data.status.toLowerCase().trim() === "online") {
+      formContainer.style.display = "block";
+    } else {
+      offlineScreen.style.display = "block";
+    }
+  } catch (err) {
+    loadingScreen.style.display = "none";
+    offlineScreen.style.display = "block";
+    offlineScreen.innerHTML = "<h2>CONNECTION FAILED</h2><p>Unable to connect to the server.<br>Please verify the backend script.</p>";
+  }
+});
 
-      try {
-        // Fetch server status. Appends ?action=status so Apps Script can handle GET separately
-        const response = await fetch(scriptURL + "?action=status");
+// ── Code submission (Grade 7 & 8) ────────────────────────────────────────────
+const statusEl = document.getElementById("status");
+const submitBtn = document.getElementById("submitBtn");
 
-        // Wait, since fetch cross-origin will throw CORS for Google Apps Script 
-        // without proper doGet handlers, catching allows us to fallback.
-        const data = await response.json();
-
-        loadingScreen.style.display = "none";
-
-        if (data && data.status && data.status.toLowerCase().trim() === "online") {
-          formContainer.style.display = "block";
-        } else {
-          // It's offline or anything else
-          offlineScreen.style.display = "block";
-        }
-
-      } catch (err) {
-        console.error("Status fetch failed", err);
-        // By default, if the script isn't updated yet to handle "?action=status",
-        // the fetch might fail. Right now, it's safer to show the offline screen.
-        loadingScreen.style.display = "none";
-        offlineScreen.style.display = "block";
-        offlineScreen.innerHTML = "<h2>CONNECTION FAILED</h2><p>Unable to connect to Google Apps Script. Please verify the backend script.</p>";
-      }
-    });
-
-    const statusEl = document.getElementById("status");
-    const submitBtn = document.getElementById("submitBtn");
-
-    document.getElementById("form").addEventListener("submit", async (e) => {
-      e.preventDefault();
-
-      const originalBtnText = submitBtn.innerText;
-      submitBtn.innerText = "Submitting...";
-      submitBtn.disabled = true;
-      statusEl.innerText = "";
-      statusEl.className = "";
-
-      const data = {
+document.getElementById("code-form").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const orig = submitBtn.innerText;
+  submitBtn.innerText = "Submitting...";
+  submitBtn.disabled = true;
+  statusEl.innerText = ""; statusEl.className = "";
+  try {
+    await fetch(SCRIPT_URL, {
+      method: "POST",
+      body: JSON.stringify({
         name: document.getElementById("name").value,
         grade: document.getElementById("grade").value,
         section: document.getElementById("section").value,
         code: document.getElementById("code").value
-      };
-
-      try {
-        const res = await fetch(scriptURL, {
-          method: "POST",
-          body: JSON.stringify(data)
-        });
-
-        statusEl.innerText = "Submitted successfully!";
-        statusEl.className = "status-success";
-        document.getElementById("form").reset();
-
-      } catch (err) {
-        statusEl.innerText = "Error submitting!";
-        statusEl.className = "status-error";
-      } finally {
-        submitBtn.innerText = originalBtnText;
-        submitBtn.disabled = false;
-      }
+      })
     });
-  </script>
+    statusEl.innerText = "Submitted successfully!";
+    statusEl.className = "status-success";
+    document.getElementById("code-form").reset();
+  } catch {
+    statusEl.innerText = "Error submitting!";
+    statusEl.className = "status-error";
+  } finally {
+    submitBtn.innerText = orig;
+    submitBtn.disabled = false;
+  }
+});
 
+// ── Screen switcher ──────────────────────────────────────────────────────────
+function showScreen(id) {
+  document.querySelectorAll('.container, .quiz-screen').forEach(el => el.style.display = 'none');
+  const target = document.getElementById(id);
+  if (target) target.style.display = 'block';
+}
+
+// ── Quiz data ────────────────────────────────────────────────────────────────
+const QUESTIONS = [
+  // MCQ (30)
+  {t:'mcq',q:'What is Scratch mainly used for?',o:['Writing books','Creating games and animations','Building houses','Editing videos'],a:1},
+  {t:'mcq',q:'Which block starts a Scratch program?',o:['Move 10 steps','Repeat','When green flag clicked','Say Hello'],a:2},
+  {t:'mcq',q:'What is a character in Scratch called?',o:['Actor','Sprite','Player','Shape'],a:1},
+  {t:'mcq',q:'Which category contains movement blocks?',o:['Looks','Sound','Motion','Events'],a:2},
+  {t:'mcq',q:'What does the "move 10 steps" block do?',o:['Changes color','Makes the sprite jump','Moves the sprite forward','Stops the program'],a:2},
+  {t:'mcq',q:'Which button runs the project?',o:['Red button','Green flag','Space key','Mouse click'],a:1},
+  {t:'mcq',q:'Which block repeats actions many times?',o:['Wait','Repeat','Say','Hide'],a:1},
+  {t:'mcq',q:'Which category is used to make sprites talk?',o:['Looks','Motion','Control','Sensing'],a:0},
+  {t:'mcq',q:'What happens when you click the red stop sign?',o:['The sprite disappears','The project saves','The program stops','The sound increases'],a:2},
+  {t:'mcq',q:'Which block can play music or sounds?',o:['Motion','Looks','Sound','Events'],a:2},
+  {t:'mcq',q:'What does the "wait" block do?',o:['Speeds up the sprite','Pauses the script','Deletes the sprite','Changes the background'],a:1},
+  {t:'mcq',q:'Which block category controls loops and stopping?',o:['Motion','Looks','Control','Sound'],a:2},
+  {t:'mcq',q:'What is the stage in Scratch?',o:['A drawing tool','The area where projects run','A sound editor','A coding block'],a:1},
+  {t:'mcq',q:'Which block checks if two sprites touch?',o:['If touching','Move','Say','Repeat'],a:0},
+  {t:'mcq',q:'Which category contains the "if" block?',o:['Events','Motion','Control','Looks'],a:2},
+  {t:'mcq',q:'Which block makes a sprite spin?',o:['Turn block','Wait block','Hide block','Ask block'],a:0},
+  {t:'mcq',q:'Which category contains keyboard events?',o:['Events','Motion','Looks','Variables'],a:0},
+  {t:'mcq',q:'What does a loop do?',o:['Ends the game','Repeats instructions','Deletes blocks','Saves the project'],a:1},
+  {t:'mcq',q:'Which block changes the sprite\'s costume?',o:['Next costume','Move steps','Play sound','Ask question'],a:0},
+  {t:'mcq',q:'What are costumes used for?',o:['Adding music','Changing sprite appearance','Writing code','Saving projects'],a:1},
+  {t:'mcq',q:'Which category helps create scores?',o:['Variables','Motion','Sound','Looks'],a:0},
+  {t:'mcq',q:'Which block asks the user a question?',o:['Ask and wait','Move steps','Repeat forever','Show'],a:0},
+  {t:'mcq',q:'What does the "forever" block do?',o:['Stops the project','Repeats forever until stopped','Plays music once','Changes the background'],a:1},
+  {t:'mcq',q:'Which tool is used to draw sprites?',o:['Paint Editor','Music Tool','Variable Tool','Stage Tool'],a:0},
+  {t:'mcq',q:'Which block changes the background?',o:['Next backdrop','Turn right','Wait','Hide'],a:0},
+  {t:'mcq',q:'Which category detects keyboard presses?',o:['Looks','Sensing','Motion','Sound'],a:1},
+  {t:'mcq',q:'What is a script in Scratch?',o:['A background image','A group of coding blocks','A sound file','A costume'],a:1},
+  {t:'mcq',q:'Which block can make a sprite invisible?',o:['Show','Hide','Wait','Repeat'],a:1},
+  {t:'mcq',q:'What does the "broadcast" block do?',o:['Deletes sprites','Sends messages between sprites','Changes costumes','Stops sounds'],a:1},
+  {t:'mcq',q:'Which coding concept means making decisions?',o:['Looping','Variables','Conditions','Motion'],a:2},
+  // True / False (10)
+  {t:'tf',q:'Scratch uses coding blocks instead of typing code.',o:['True','False'],a:0},
+  {t:'tf',q:'Sprites cannot move in Scratch.',o:['True','False'],a:1},
+  {t:'tf',q:'The green flag starts the project.',o:['True','False'],a:0},
+  {t:'tf',q:'A loop repeats instructions.',o:['True','False'],a:0},
+  {t:'tf',q:'Scratch can only make games.',o:['True','False'],a:1},
+  {t:'tf',q:'Variables can store scores.',o:['True','False'],a:0},
+  {t:'tf',q:'The stage is where sprites perform actions.',o:['True','False'],a:0},
+  {t:'tf',q:'Sounds cannot be added in Scratch projects.',o:['True','False'],a:1},
+  {t:'tf',q:'The "forever" block runs only once.',o:['True','False'],a:1},
+  {t:'tf',q:'Scratch is good for beginners learning programming.',o:['True','False'],a:0},
+  // Short Answer (5)
+  {t:'short',q:'What is a sprite in Scratch?'},
+  {t:'short',q:'What does the green flag do?'},
+  {t:'short',q:'Name one block category in Scratch.'},
+  {t:'short',q:'What is a variable used for?'},
+  {t:'short',q:'What is the purpose of the "repeat" block?'},
+];
+
+let currentQ = 0, answers = [], studentName = '', studentSection = '';
+
+function startQuiz() {
+  studentName = document.getElementById('q5-name').value.trim();
+  studentSection = document.getElementById('q5-section').value;
+  if (!studentName || !studentSection) { alert('Please fill in your name and select your section.'); return; }
+  currentQ = 0; answers = [];
+  showScreen('quiz-question');
+  renderQuestion();
+}
+
+function renderQuestion() {
+  const q = QUESTIONS[currentQ];
+  const total = QUESTIONS.length;
+  document.getElementById('q-counter').textContent = 'Question ' + (currentQ + 1) + ' of ' + total;
+  const typeLabels = {mcq:'Multiple Choice', tf:'True / False', short:'Short Answer'};
+  document.getElementById('q-type-badge').textContent = typeLabels[q.t];
+  document.getElementById('q-progress').style.width = ((currentQ / total) * 100) + '%';
+  document.getElementById('q-text').textContent = q.q;
+
+  const optDiv = document.getElementById('q-options');
+  const shortWrap = document.getElementById('q-short-wrap');
+  optDiv.innerHTML = ''; shortWrap.style.display = 'none';
+
+  if (q.t === 'short') {
+    shortWrap.style.display = '';
+    document.getElementById('q-short-input').value = answers[currentQ] || '';
+  } else {
+    q.o.forEach((opt, i) => {
+      const btn = document.createElement('button');
+      btn.className = 'opt-btn' + (answers[currentQ] === i ? ' selected' : '');
+      btn.textContent = opt;
+      btn.onclick = () => { answers[currentQ] = i; renderQuestion(); };
+      optDiv.appendChild(btn);
+    });
+  }
+  document.getElementById('btn-next').textContent = currentQ === total - 1 ? 'Submit Exam' : 'Next →';
+  const prevBtn = document.getElementById('btn-prev');
+  prevBtn.style.display = currentQ === 0 ? 'none' : '';
+}
+
+function saveCurrentAnswer() {
+  const q = QUESTIONS[currentQ];
+  if (q.t === 'short') {
+    const val = document.getElementById('q-short-input').value.trim();
+    if (val) answers[currentQ] = val;
+  }
+}
+
+function prevQuestion() {
+  saveCurrentAnswer();
+  if (currentQ > 0) { currentQ--; renderQuestion(); }
+}
+
+function nextQuestion() {
+  const q = QUESTIONS[currentQ];
+  if (q.t === 'short') {
+    const val = document.getElementById('q-short-input').value.trim();
+    if (!val) { alert('Please write your answer before continuing.'); return; }
+    answers[currentQ] = val;
+  } else if (answers[currentQ] === undefined) {
+    alert('Please select an answer before continuing.'); return;
+  }
+  currentQ++;
+  if (currentQ < QUESTIONS.length) { renderQuestion(); }
+  else { submitExam(); }
+}
+
+async function submitExam() {
+  showScreen('quiz-submitting');
+
+  let autoScore = 0;
+  const mcqTotal = QUESTIONS.filter(q => q.t !== 'short').length;
+  const answerDetails = QUESTIONS.map((q, i) => {
+    const studentAns = q.t === 'short' ? answers[i] : q.o[answers[i]];
+    const correctAns = q.t === 'short' ? 'N/A (short answer)' : q.o[q.a];
+    const correct = q.t !== 'short' && answers[i] === q.a;
+    if (correct) autoScore++;
+    return 'Q' + (i+1) + ' [' + q.t.toUpperCase() + ']: ' + q.q + '\n  Student: ' + studentAns + (q.t !== 'short' ? '\n  Correct: ' + correctAns + ' | ' + (correct ? 'CORRECT' : 'WRONG') : '');
+  }).join('\n\n');
+
+  const payload = {
+    grade5exam: true,
+    name: studentName,
+    grade: '5',
+    section: studentSection,
+    score: autoScore + '/' + mcqTotal,
+    timestamp: new Date().toLocaleString(),
+    answers: answerDetails
+  };
+
+  try {
+    await fetch(SCRIPT_URL, { method: 'POST', body: JSON.stringify(payload) });
+  } catch (e) { console.warn('Submission error', e); }
+
+  document.getElementById('done-details').innerHTML =
+    '<strong>' + studentName + '</strong><br>Section ' + studentSection +
+    '<br><br>Auto-scored: <strong>' + autoScore + ' / ' + mcqTotal + '</strong> (MCQ + T/F)<br>' +
+    '<span style="font-size:13px;color:rgba(255,255,255,0.4);">Short answer questions will be reviewed by your teacher.</span>';
+
+  showScreen('quiz-done');
+}
+</script>
 </body>
-
 </html>
