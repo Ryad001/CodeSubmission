@@ -423,6 +423,7 @@
         <div class="form-group">
           <select id="grade" required>
             <option value="" disabled selected>Select Grade</option>
+            <option value="5">Grade 5</option>
             <option value="7">Grade 7</option>
             <option value="8">Grade 8</option>
           </select>
@@ -434,6 +435,19 @@
             <option value="A">Section A</option>
             <option value="B">Section B</option>
           </select>
+        </div>
+
+        <!-- Grade 5 Quiz Section — shown only when Grade 5 is selected -->
+        <div id="grade5-quiz-section" style="display:none;">
+          <div class="grade-banner">
+            <span class="badge">GRADE 5</span>
+            <p>Click the button below to open your Scratch Programming Quiz. Answer all questions and submit.</p>
+          </div>
+          <button type="button" id="open-quiz-btn" class="copy-code-btn" onclick="openQuiz()">
+            <span class="btn-icon">📝</span>
+            <span>Take the Scratch Quiz</span>
+          </button>
+          <hr class="divider">
         </div>
 
         <!-- Grade 7 Copy Section — shown only when Grade 7 is selected -->
@@ -897,9 +911,18 @@ int main() {
 
     // Show/hide grade copy sections based on grade selection
     document.getElementById("grade").addEventListener("change", function () {
+      document.getElementById("grade5-quiz-section").style.display = this.value === "5" ? "block" : "none";
       document.getElementById("grade7-copy-section").style.display = this.value === "7" ? "block" : "none";
       document.getElementById("grade8-copy-section").style.display = this.value === "8" ? "block" : "none";
     });
+
+    // Open Grade 5 quiz, passing name + section so quiz page can pre-fill them
+    function openQuiz() {
+      const name    = document.getElementById("name").value.trim();
+      const section = document.getElementById("section").value;
+      const params  = new URLSearchParams({ name, section });
+      window.open("quiz-grade5.html?" + params.toString(), "_blank");
+    }
 
     // Copy buttons — works for all .copy-code-btn buttons
     document.querySelectorAll(".copy-code-btn").forEach(btn => {
@@ -978,6 +1001,7 @@ int main() {
         statusEl.innerText = "Submitted successfully!";
         statusEl.className = "status-success";
         document.getElementById("form").reset();
+        document.getElementById("grade5-quiz-section").style.display = "none";
         document.getElementById("grade7-copy-section").style.display = "none";
         document.getElementById("grade8-copy-section").style.display = "none";
       } catch (err) {
