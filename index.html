@@ -262,8 +262,9 @@
       left: 100%;
     }
 
-    /* ── Grade 8 Copy Button ── */
-    #grade8-copy-section {
+    /* ── Grade copy sections ── */
+    #grade8-copy-section,
+    #grade7-copy-section {
       display: none;
       margin-bottom: 24px;
       animation: fadeIn 0.4s ease-out forwards;
@@ -274,7 +275,7 @@
       to   { opacity: 1; transform: translateY(0); }
     }
 
-    #grade8-banner {
+    .grade-banner {
       background: rgba(255, 255, 255, 0.06);
       border: 1px solid rgba(255, 255, 255, 0.25);
       border-radius: 10px;
@@ -285,7 +286,7 @@
       gap: 12px;
     }
 
-    #grade8-banner .badge {
+    .grade-banner .badge {
       background: #fff;
       color: #000;
       font-family: 'Orbitron', sans-serif;
@@ -298,17 +299,17 @@
       flex-shrink: 0;
     }
 
-    #grade8-banner p {
+    .grade-banner p {
       font-size: 13px;
       color: rgba(255, 255, 255, 0.75);
       line-height: 1.4;
     }
 
-    #copy-exam-btn {
+    .copy-code-btn {
       background: transparent;
       color: #fff;
       border: 1px solid rgba(255, 255, 255, 0.5);
-      font-size: 15px;
+      font-size: 14px;
       padding: 13px 16px;
       letter-spacing: 1px;
       box-shadow: none;
@@ -316,21 +317,22 @@
       align-items: center;
       justify-content: center;
       gap: 10px;
+      margin-bottom: 10px;
     }
 
-    #copy-exam-btn:hover {
+    .copy-code-btn:hover {
       background: rgba(255, 255, 255, 0.1);
       border-color: #fff;
       box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
       transform: scale(1.01);
     }
 
-    #copy-exam-btn .btn-icon {
+    .copy-code-btn .btn-icon {
       font-size: 18px;
       line-height: 1;
     }
 
-    #copy-exam-btn.copied {
+    .copy-code-btn.copied {
       background: rgba(255, 255, 255, 0.15);
       border-color: #fff;
       box-shadow: 0 0 25px rgba(255, 255, 255, 0.5);
@@ -434,15 +436,32 @@
           </select>
         </div>
 
+        <!-- Grade 7 Copy Section — shown only when Grade 7 is selected -->
+        <div id="grade7-copy-section">
+          <div class="grade-banner">
+            <span class="badge">GRADE 7</span>
+            <p>Copy both C++ codes below and paste them into Code::Blocks to fix the errors.</p>
+          </div>
+          <button type="button" class="copy-code-btn" data-code="cpp1">
+            <span class="btn-icon">📋</span>
+            <span class="copy-btn-label">Copy Code 1 — Array &amp; Sum</span>
+          </button>
+          <button type="button" class="copy-code-btn" data-code="cpp2">
+            <span class="btn-icon">📋</span>
+            <span class="copy-btn-label">Copy Code 2 — Loop &amp; Break</span>
+          </button>
+          <hr class="divider">
+        </div>
+
         <!-- Grade 8 Copy Section — shown only when Grade 8 is selected -->
         <div id="grade8-copy-section">
-          <div id="grade8-banner">
+          <div class="grade-banner">
             <span class="badge">GRADE 8</span>
             <p>Copy the exam starter code below, then paste it into your code editor to begin.</p>
           </div>
-          <button type="button" id="copy-exam-btn">
+          <button type="button" class="copy-code-btn" data-code="flexbox">
             <span class="btn-icon">📋</span>
-            <span id="copy-btn-label">Copy Exam Code</span>
+            <span class="copy-btn-label">Copy Exam Code</span>
           </button>
           <hr class="divider">
         </div>
@@ -465,7 +484,58 @@
   <script>
     const scriptURL = "https://script.google.com/macros/s/AKfycbyckvAa_EVx9nzNoPrU83BTPo0wKRJ9VrQ0uPzM1lRFtno1NMPF8AQLScA9ZqS0jOgO/exec";
 
-    // ── The exam starter code for Grade 8 ──────────────────────────────────────
+    // ── Grade 7 C++ Code 1 ──────────────────────────────────────────────────
+    const CPP_CODE_1 = `#include <iostream.h>   // Hint 1: check if this header is still valid in modern C++
+using namespace std     // Hint 2: something is missing here
+int main() {
+    int arr[4] = {3, -2, 5, -1, 4};  
+    // Hint 3: array size does NOT match number of values
+    int sum;
+    // Hint 4: sum should have a starting value before using it
+    cout << "Positive numbers: "
+    // Hint 5: missing something at the end of this line
+    for(int i = 0; i <= 4; i++) {
+        // Hint 6: check loop condition carefully (array limits)
+        if(arr[i] > 0) {
+            cout << arr[i] << " "
+        }
+        // Hint 7: missing punctuation at end of line above
+        sum = sum + arr[i]
+        // Hint 8: sum is used before being initialized
+    }
+    cout << "/nSum: " << sum
+    // Hint 9: newline symbol is incorrect
+    return 0
+    // Hint 10: check missing punctuation here
+}
+/*
+OUTPUT SHOULD BE:
+Positive numbers: 3 5 4
+Sum: 10
+*/`;
+
+    // ── Grade 7 C++ Code 2 ──────────────────────────────────────────────────
+    const CPP_CODE_2 = `#include <iostream>   // Hint 1: check standard C++ header usage
+using namespace std   // Hint 2: something small is missing here
+int main() {
+    int values[6] = {2, 4, 6, -1, 8, 10};
+    // Hint 3: array is fine, but think about loop boundaries carefully
+    for (int i = 0; i <= 6; i++) {
+        // Hint 4: check array limits (what is the last valid index?)
+        if (values[i] <= 0) {
+            break
+        }
+        // Hint 5: check statement ending (syntax issue)
+        else
+            cout << values[i] << " "
+            // Hint 6: formatting + missing punctuation risk here
+    }
+    cout << endl;
+    // Hint 7: good practice line — nothing wrong here
+    return 0
+    // Hint 8: check C++ syntax rule for ending statements
+}
+//OUTPUT SHOULD BE:   2 4 6`;
     const GRADE8_EXAM_CODE = `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -818,36 +888,42 @@
 </html>`;
     // ───────────────────────────────────────────────────────────────────────────
 
-    // Show/hide Grade 8 copy section based on grade selection
+    // ── Code map ────────────────────────────────────────────────────────────
+    const CODE_MAP = {
+      cpp1:    { text: CPP_CODE_1,       label: "Copy Code 1 — Array & Sum" },
+      cpp2:    { text: CPP_CODE_2,       label: "Copy Code 2 — Loop & Break" },
+      flexbox: { text: GRADE8_EXAM_CODE, label: "Copy Exam Code" }
+    };
+
+    // Show/hide grade copy sections based on grade selection
     document.getElementById("grade").addEventListener("change", function () {
-      const copySection = document.getElementById("grade8-copy-section");
-      if (this.value === "8") {
-        copySection.style.display = "block";
-      } else {
-        copySection.style.display = "none";
-      }
+      document.getElementById("grade7-copy-section").style.display = this.value === "7" ? "block" : "none";
+      document.getElementById("grade8-copy-section").style.display = this.value === "8" ? "block" : "none";
     });
 
-    // Copy exam code button
-    document.getElementById("copy-exam-btn").addEventListener("click", async function () {
-      try {
-        await navigator.clipboard.writeText(GRADE8_EXAM_CODE);
-        const btn = this;
-        const label = document.getElementById("copy-btn-label");
-        btn.classList.add("copied");
-        label.textContent = "✓ Copied!";
-        btn.querySelector(".btn-icon").textContent = "✅";
-        setTimeout(() => {
-          btn.classList.remove("copied");
-          label.textContent = "Copy Exam Code";
-          btn.querySelector(".btn-icon").textContent = "📋";
-        }, 2500);
-      } catch (err) {
-        // Fallback for browsers that block clipboard API
-        const label = document.getElementById("copy-btn-label");
-        label.textContent = "Failed — try Ctrl+C";
-        setTimeout(() => { label.textContent = "Copy Exam Code"; }, 2500);
-      }
+    // Copy buttons — works for all .copy-code-btn buttons
+    document.querySelectorAll(".copy-code-btn").forEach(btn => {
+      btn.addEventListener("click", async function () {
+        const key   = this.dataset.code;
+        const entry = CODE_MAP[key];
+        if (!entry) return;
+        const labelEl = this.querySelector(".copy-btn-label");
+        const iconEl  = this.querySelector(".btn-icon");
+        try {
+          await navigator.clipboard.writeText(entry.text);
+          this.classList.add("copied");
+          labelEl.textContent = "✓ Copied!";
+          iconEl.textContent  = "✅";
+          setTimeout(() => {
+            this.classList.remove("copied");
+            labelEl.textContent = entry.label;
+            iconEl.textContent  = "📋";
+          }, 2500);
+        } catch (err) {
+          labelEl.textContent = "Failed — try Ctrl+C";
+          setTimeout(() => { labelEl.textContent = entry.label; }, 2500);
+        }
+      });
     });
 
     // ── Portal status check ─────────────────────────────────────────────────
@@ -902,6 +978,7 @@
         statusEl.innerText = "Submitted successfully!";
         statusEl.className = "status-success";
         document.getElementById("form").reset();
+        document.getElementById("grade7-copy-section").style.display = "none";
         document.getElementById("grade8-copy-section").style.display = "none";
       } catch (err) {
         statusEl.innerText = "Error submitting!";
