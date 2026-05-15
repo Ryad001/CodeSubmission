@@ -41,7 +41,6 @@
       overflow-y: auto;
     }
 
-    /* Moving Grid Animation */
     .grid-bg {
       position: fixed;
       width: 200vw;
@@ -69,13 +68,8 @@
     }
 
     @keyframes gridMove {
-      from {
-        background-position: 0 0;
-      }
-
-      to {
-        background-position: 0 50px;
-      }
+      from { background-position: 0 0; }
+      to { background-position: 0 50px; }
     }
 
     .main-wrapper {
@@ -87,7 +81,6 @@
       justify-content: center;
     }
 
-    /* Logo styling */
     .logo-container {
       margin-bottom: 30px;
       z-index: 10;
@@ -109,13 +102,10 @@
     }
 
     @keyframes floatLogo {
-
-      0%,
-      100% {
+      0%, 100% {
         transform: translateY(0);
         box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
       }
-
       50% {
         transform: translateY(-10px);
         box-shadow: 0 0 30px rgba(255, 255, 255, 0.6);
@@ -272,6 +262,87 @@
       left: 100%;
     }
 
+    /* ── Grade 8 Copy Button ── */
+    #grade8-copy-section {
+      display: none;
+      margin-bottom: 24px;
+      animation: fadeIn 0.4s ease-out forwards;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-8px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    #grade8-banner {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      border-radius: 10px;
+      padding: 16px 18px;
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    #grade8-banner .badge {
+      background: #fff;
+      color: #000;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      padding: 4px 10px;
+      border-radius: 20px;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    #grade8-banner p {
+      font-size: 13px;
+      color: rgba(255, 255, 255, 0.75);
+      line-height: 1.4;
+    }
+
+    #copy-exam-btn {
+      background: transparent;
+      color: #fff;
+      border: 1px solid rgba(255, 255, 255, 0.5);
+      font-size: 15px;
+      padding: 13px 16px;
+      letter-spacing: 1px;
+      box-shadow: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    #copy-exam-btn:hover {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: #fff;
+      box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+      transform: scale(1.01);
+    }
+
+    #copy-exam-btn .btn-icon {
+      font-size: 18px;
+      line-height: 1;
+    }
+
+    #copy-exam-btn.copied {
+      background: rgba(255, 255, 255, 0.15);
+      border-color: #fff;
+      box-shadow: 0 0 25px rgba(255, 255, 255, 0.5);
+    }
+
+    /* ── Submit divider ── */
+    .divider {
+      border: none;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      margin: 4px 0 20px;
+    }
+
     #status {
       text-align: center;
       margin-top: 20px;
@@ -295,7 +366,6 @@
       text-decoration: underline;
     }
 
-    /* Footer styling */
     .designer-footer {
       width: 100%;
       text-align: center;
@@ -364,6 +434,19 @@
           </select>
         </div>
 
+        <!-- Grade 8 Copy Section — shown only when Grade 8 is selected -->
+        <div id="grade8-copy-section">
+          <div id="grade8-banner">
+            <span class="badge">GRADE 8</span>
+            <p>Copy the exam starter code below, then paste it into your code editor to begin.</p>
+          </div>
+          <button type="button" id="copy-exam-btn">
+            <span class="btn-icon">📋</span>
+            <span id="copy-btn-label">Copy Exam Code</span>
+          </button>
+          <hr class="divider">
+        </div>
+
         <div class="form-group">
           <textarea id="code" placeholder="Paste your code here..." required></textarea>
         </div>
@@ -382,38 +465,416 @@
   <script>
     const scriptURL = "https://script.google.com/macros/s/AKfycbyckvAa_EVx9nzNoPrU83BTPo0wKRJ9VrQ0uPzM1lRFtno1NMPF8AQLScA9ZqS0jOgO/exec";
 
+    // ── The exam starter code for Grade 8 ──────────────────────────────────────
+    const GRADE8_EXAM_CODE = `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Flexbox Exam - Exercise Mode</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      background: #f4f4f4;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .header {
+      background: #1f2937;
+      color: white;
+      padding: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .instructions {
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .exam-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .question {
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .question-title {
+      font-size: 18px;
+      font-weight: bold;
+    }
+
+    .question-desc {
+      font-size: 14px;
+      color: #374151;
+    }
+
+    .task-box {
+      height: 180px;
+      background: #e5e7eb;
+      border: 2px dashed #9ca3af;
+      display: flex;
+      padding: 10px;
+      gap: 10px;
+    }
+
+    .item {
+      width: 60px;
+      height: 60px;
+      background: #2563eb;
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-weight: bold;
+      border-radius: 6px;
+    }
+
+    /* student CSS area */
+    .q1 {}
+    .q2 {}
+    .q3 {}
+    .q4 {}
+    .q5 {}
+    .q6 {}
+    .q7 {}
+    .q8 {}
+    .q9 {}
+    .q10 {}
+    .q11 {}
+    .q12 {}
+    .q13 {}
+    .q14 {}
+    .q15 {}
+    .q16 {}
+    .q17 {}
+    .q18 {}
+    .q19 {}
+    .q20 {}
+
+    .footer {
+      background: #111827;
+      color: white;
+      padding: 15px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 10px;
+    }
+
+  </style>
+</head>
+<body>
+
+  <div class="container">
+
+    <div class="header">
+      <h1>Flexbox Exam - Exercise Mode</h1>
+    </div>
+
+    <div class="instructions">
+      <h2>Instructions</h2>
+      <p>Use only Flexbox properties covered in class. Complete each layout by editing its CSS class.</p>
+    </div>
+
+    <div class="exam-grid">
+
+      <div class="question">
+        <div class="question-title">Exercise 1</div>
+        <div class="question-desc">Position items at the top-left corner in a horizontal layout.</div>
+        <div class="task-box q1">
+          <div class="item">A</div>
+          <div class="item">B</div>
+          <div class="item">C</div>
+        </div>
+      </div>
+
+      <div class="question">
+        <div class="question-title">Exercise 2</div>
+        <div class="question-desc">Center all items both horizontally and vertically.</div>
+        <div class="task-box q2">
+          <div class="item">A</div>
+          <div class="item">B</div>
+          <div class="item">C</div>
+        </div>
+      </div>
+
+      <div class="question">
+        <div class="question-title">Exercise 3</div>
+        <div class="question-desc">Move all items to the bottom-right corner.</div>
+        <div class="task-box q3">
+          <div class="item">A</div>
+          <div class="item">B</div>
+          <div class="item">C</div>
+        </div>
+      </div>
+
+      <div class="question">
+        <div class="question-title">Exercise 4</div>
+        <div class="question-desc">Distribute items so first is left, last is right, middle spaced evenly.</div>
+        <div class="task-box q4">
+          <div class="item">A</div>
+          <div class="item">B</div>
+          <div class="item">C</div>
+        </div>
+      </div>
+
+      <div class="question">
+        <div class="question-title">Exercise 5</div>
+        <div class="question-desc">Create equal spacing around all items horizontally.</div>
+        <div class="task-box q5">
+          <div class="item">A</div>
+          <div class="item">B</div>
+          <div class="item">C</div>
+        </div>
+      </div>
+
+      <div class="question">
+        <div class="question-title">Exercise 6</div>
+        <div class="question-desc">Arrange items vertically and center them in the box.</div>
+        <div class="task-box q6">
+          <div class="item">A</div>
+          <div class="item">B</div>
+          <div class="item">C</div>
+        </div>
+      </div>
+
+      <div class="question">
+        <div class="question-title">Exercise 7</div>
+        <div class="question-desc">Stack items vertically starting from top-left.</div>
+        <div class="task-box q7">
+          <div class="item">A</div>
+          <div class="item">B</div>
+          <div class="item">C</div>
+        </div>
+      </div>
+
+      <div class="question">
+        <div class="question-title">Exercise 8</div>
+        <div class="question-desc">Stack items vertically aligned to bottom-right.</div>
+        <div class="task-box q8">
+          <div class="item">A</div>
+          <div class="item">B</div>
+          <div class="item">C</div>
+        </div>
+      </div>
+
+      <div class="question">
+        <div class="question-title">Exercise 9</div>
+        <div class="question-desc">Arrange items vertically with space between them and centered horizontally.</div>
+        <div class="task-box q9">
+          <div class="item">A</div>
+          <div class="item">B</div>
+          <div class="item">C</div>
+        </div>
+      </div>
+
+      <div class="question">
+        <div class="question-title">Exercise 10</div>
+        <div class="question-desc">Create a balanced centered layout similar to a dashboard.</div>
+        <div class="task-box q10">
+          <div class="item">A</div>
+          <div class="item">B</div>
+          <div class="item">C</div>
+        </div>
+      </div>
+
+      <div class="question">
+        <div class="question-title">Exercise 11</div>
+        <div class="question-desc">Arrange items vertically in a left-aligned column.</div>
+        <div class="task-box q11">
+          <div class="item">1</div>
+          <div class="item">2</div>
+          <div class="item">3</div>
+        </div>
+      </div>
+
+      <div class="question">
+        <div class="question-title">Exercise 12</div>
+        <div class="question-desc">Center items in a vertical column layout.</div>
+        <div class="task-box q12">
+          <div class="item">1</div>
+          <div class="item">2</div>
+          <div class="item">3</div>
+        </div>
+      </div>
+
+      <div class="question">
+        <div class="question-title">Exercise 13</div>
+        <div class="question-desc">Align items to the right in a vertical stack.</div>
+        <div class="task-box q13">
+          <div class="item">1</div>
+          <div class="item">2</div>
+          <div class="item">3</div>
+        </div>
+      </div>
+
+      <div class="question">
+        <div class="question-title">Exercise 14</div>
+        <div class="question-desc">Center items perfectly in both axes using column layout.</div>
+        <div class="task-box q14">
+          <div class="item">1</div>
+          <div class="item">2</div>
+          <div class="item">3</div>
+        </div>
+      </div>
+
+      <div class="question">
+        <div class="question-title">Exercise 15</div>
+        <div class="question-desc">Place items at bottom-left in a column layout.</div>
+        <div class="task-box q15">
+          <div class="item">1</div>
+          <div class="item">2</div>
+          <div class="item">3</div>
+        </div>
+      </div>
+
+      <div class="question">
+        <div class="question-title">Exercise 16</div>
+        <div class="question-desc">Place items at bottom-center in a column layout.</div>
+        <div class="task-box q16">
+          <div class="item">1</div>
+          <div class="item">2</div>
+          <div class="item">3</div>
+        </div>
+      </div>
+
+      <div class="question">
+        <div class="question-title">Exercise 17</div>
+        <div class="question-desc">Place items at bottom-right in a column layout.</div>
+        <div class="task-box q17">
+          <div class="item">1</div>
+          <div class="item">2</div>
+          <div class="item">3</div>
+        </div>
+      </div>
+
+      <div class="question">
+        <div class="question-title">Exercise 18</div>
+        <div class="question-desc">Distribute items vertically with space between them and center horizontally.</div>
+        <div class="task-box q18">
+          <div class="item">1</div>
+          <div class="item">2</div>
+          <div class="item">3</div>
+        </div>
+      </div>
+
+      <div class="question">
+        <div class="question-title">Exercise 19</div>
+        <div class="question-desc">Distribute items vertically with space around them.</div>
+        <div class="task-box q19">
+          <div class="item">1</div>
+          <div class="item">2</div>
+          <div class="item">3</div>
+        </div>
+      </div>
+
+      <div class="question">
+        <div class="question-title">Exercise 20</div>
+        <div class="question-desc">Create a fully centered vertical stack layout.</div>
+        <div class="task-box q20">
+          <div class="item">X</div>
+          <div class="item">Y</div>
+          <div class="item">Z</div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="footer">
+      Flexbox Exercise Mode
+    </div>
+
+  </div>
+
+</body>
+</html>`;
+    // ───────────────────────────────────────────────────────────────────────────
+
+    // Show/hide Grade 8 copy section based on grade selection
+    document.getElementById("grade").addEventListener("change", function () {
+      const copySection = document.getElementById("grade8-copy-section");
+      if (this.value === "8") {
+        copySection.style.display = "block";
+      } else {
+        copySection.style.display = "none";
+      }
+    });
+
+    // Copy exam code button
+    document.getElementById("copy-exam-btn").addEventListener("click", async function () {
+      try {
+        await navigator.clipboard.writeText(GRADE8_EXAM_CODE);
+        const btn = this;
+        const label = document.getElementById("copy-btn-label");
+        btn.classList.add("copied");
+        label.textContent = "✓ Copied!";
+        btn.querySelector(".btn-icon").textContent = "✅";
+        setTimeout(() => {
+          btn.classList.remove("copied");
+          label.textContent = "Copy Exam Code";
+          btn.querySelector(".btn-icon").textContent = "📋";
+        }, 2500);
+      } catch (err) {
+        // Fallback for browsers that block clipboard API
+        const label = document.getElementById("copy-btn-label");
+        label.textContent = "Failed — try Ctrl+C";
+        setTimeout(() => { label.textContent = "Copy Exam Code"; }, 2500);
+      }
+    });
+
+    // ── Portal status check ─────────────────────────────────────────────────
     document.addEventListener("DOMContentLoaded", async () => {
       const loadingScreen = document.getElementById("loading-screen");
       const offlineScreen = document.getElementById("offline-screen");
       const formContainer = document.getElementById("form-container");
 
       try {
-        // Fetch server status. Appends ?action=status so Apps Script can handle GET separately
         const response = await fetch(scriptURL + "?action=status");
-
-        // Wait, since fetch cross-origin will throw CORS for Google Apps Script 
-        // without proper doGet handlers, catching allows us to fallback.
         const data = await response.json();
-
         loadingScreen.style.display = "none";
 
         if (data && data.status && data.status.toLowerCase().trim() === "online") {
           formContainer.style.display = "block";
         } else {
-          // It's offline or anything else
           offlineScreen.style.display = "block";
         }
-
       } catch (err) {
         console.error("Status fetch failed", err);
-        // By default, if the script isn't updated yet to handle "?action=status",
-        // the fetch might fail. Right now, it's safer to show the offline screen.
         loadingScreen.style.display = "none";
         offlineScreen.style.display = "block";
         offlineScreen.innerHTML = "<h2>CONNECTION FAILED</h2><p>Unable to connect to Google Apps Script. Please verify the backend script.</p>";
       }
     });
 
+    // ── Form submission ─────────────────────────────────────────────────────
     const statusEl = document.getElementById("status");
     const submitBtn = document.getElementById("submitBtn");
 
@@ -434,15 +895,14 @@
       };
 
       try {
-        const res = await fetch(scriptURL, {
+        await fetch(scriptURL, {
           method: "POST",
           body: JSON.stringify(data)
         });
-
         statusEl.innerText = "Submitted successfully!";
         statusEl.className = "status-success";
         document.getElementById("form").reset();
-
+        document.getElementById("grade8-copy-section").style.display = "none";
       } catch (err) {
         statusEl.innerText = "Error submitting!";
         statusEl.className = "status-error";
@@ -454,5 +914,4 @@
   </script>
 
 </body>
-
 </html>
