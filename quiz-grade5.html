@@ -1,979 +1,1029 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Scratch Quiz — Grade 5</title>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
-  <style>
-    :root {
-      --bg: #060610;
-      --card: rgba(15, 15, 30, 0.85);
-      --border: rgba(255,255,255,0.15);
-      --accent: #ffffff;
-      --muted: rgba(255,255,255,0.55);
-      --correct-bg: rgba(255,255,255,0.08);
-    }
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Scratch Quiz — Grade 5</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@500;600;700&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --bg: #060610;
+            --card: rgba(15, 15, 30, 0.85);
+            --border: rgba(255, 255, 255, 0.15);
+            --accent: #ffffff;
+            --muted: rgba(255, 255, 255, 0.55);
+            --correct-bg: rgba(255, 255, 255, 0.08);
+        }
 
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
 
-    body {
-      font-family: 'Rajdhani', sans-serif;
-      background: var(--bg);
-      color: #fff;
-      min-height: 100vh;
-      padding: 30px 20px 60px;
-    }
+        body {
+            font-family: 'Rajdhani', sans-serif;
+            background: var(--bg);
+            color: #fff;
+            min-height: 100vh;
+            padding: 30px 20px 60px;
+        }
 
-    /* grid background */
-    body::before {
-      content: '';
-      position: fixed;
-      inset: 0;
-      background-image:
-        linear-gradient(rgba(255,255,255,0.07) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255,255,255,0.07) 1px, transparent 1px);
-      background-size: 40px 40px;
-      z-index: -1;
-      pointer-events: none;
-    }
+        /* grid background */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(255, 255, 255, 0.07) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.07) 1px, transparent 1px);
+            background-size: 40px 40px;
+            z-index: -1;
+            pointer-events: none;
+        }
 
-    .page-wrap {
-      max-width: 780px;
-      margin: 0 auto;
-      display: flex;
-      flex-direction: column;
-      gap: 28px;
-    }
+        .page-wrap {
+            max-width: 780px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 28px;
+        }
 
-    /* ── Header ── */
-    .quiz-header {
-      text-align: center;
-      padding: 36px 30px 28px;
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 18px;
-      backdrop-filter: blur(12px);
-    }
+        /* ── Header ── */
+        .quiz-header {
+            text-align: center;
+            padding: 36px 30px 28px;
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            backdrop-filter: blur(12px);
+        }
 
-    .quiz-header .grade-tag {
-      display: inline-block;
-      background: #fff;
-      color: #000;
-      font-family: 'Orbitron', sans-serif;
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 2px;
-      padding: 5px 14px;
-      border-radius: 20px;
-      margin-bottom: 14px;
-    }
+        .quiz-header .grade-tag {
+            display: inline-block;
+            background: #fff;
+            color: #000;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            padding: 5px 14px;
+            border-radius: 20px;
+            margin-bottom: 14px;
+        }
 
-    .quiz-header h1 {
-      font-family: 'Orbitron', sans-serif;
-      font-size: clamp(20px, 4vw, 30px);
-      font-weight: 900;
-      text-transform: uppercase;
-      letter-spacing: 3px;
-      text-shadow: 0 0 20px rgba(255,255,255,0.4);
-      margin-bottom: 8px;
-    }
+        .quiz-header h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: clamp(20px, 4vw, 30px);
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.4);
+            margin-bottom: 8px;
+        }
 
-    .quiz-header p {
-      color: var(--muted);
-      font-size: 15px;
-    }
+        .quiz-header p {
+            color: var(--muted);
+            font-size: 15px;
+        }
 
-    /* ── Student info bar ── */
-    .student-bar {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 20px 24px;
-      display: flex;
-      gap: 16px;
-      flex-wrap: wrap;
-      backdrop-filter: blur(12px);
-    }
+        /* ── Student info bar ── */
+        .student-bar {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 20px 24px;
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+            backdrop-filter: blur(12px);
+        }
 
-    .student-bar input,
-    .student-bar select {
-      flex: 1;
-      min-width: 160px;
-      background: rgba(0,0,0,0.5);
-      border: 1px solid rgba(255,255,255,0.25);
-      border-radius: 8px;
-      padding: 12px 14px;
-      color: #fff;
-      font-family: 'Rajdhani', sans-serif;
-      font-size: 15px;
-      outline: none;
-      transition: border-color 0.2s, box-shadow 0.2s;
-    }
+        .student-bar input,
+        .student-bar select {
+            flex: 1;
+            min-width: 160px;
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            border-radius: 8px;
+            padding: 12px 14px;
+            color: #fff;
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 15px;
+            outline: none;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
 
-    .student-bar input:focus,
-    .student-bar select:focus {
-      border-color: #fff;
-      box-shadow: 0 0 12px rgba(255,255,255,0.3);
-    }
+        .student-bar input:focus,
+        .student-bar select:focus {
+            border-color: #fff;
+            box-shadow: 0 0 12px rgba(255, 255, 255, 0.3);
+        }
 
-    .student-bar input::placeholder { color: rgba(255,255,255,0.35); }
+        .student-bar input::placeholder {
+            color: rgba(255, 255, 255, 0.35);
+        }
 
-    .student-bar select option { background: #111; }
+        .student-bar select option {
+            background: #111;
+        }
 
-    /* ── Section label ── */
-    .section-label {
-      font-family: 'Orbitron', sans-serif;
-      font-size: 13px;
-      font-weight: 700;
-      letter-spacing: 2px;
-      color: var(--muted);
-      text-transform: uppercase;
-      padding-left: 4px;
-    }
+        /* ── Section label ── */
+        .section-label {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            color: var(--muted);
+            text-transform: uppercase;
+            padding-left: 4px;
+        }
 
-    /* ── Question card ── */
-    .question-card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 22px 26px;
-      backdrop-filter: blur(10px);
-      transition: border-color 0.2s;
-    }
+        /* ── Question card ── */
+        .question-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 22px 26px;
+            backdrop-filter: blur(10px);
+            transition: border-color 0.2s;
+        }
 
-    .question-card:focus-within {
-      border-color: rgba(255,255,255,0.35);
-    }
+        .question-card:focus-within {
+            border-color: rgba(255, 255, 255, 0.35);
+        }
 
-    .q-number {
-      font-family: 'Orbitron', sans-serif;
-      font-size: 11px;
-      color: var(--muted);
-      letter-spacing: 1.5px;
-      margin-bottom: 8px;
-    }
+        .q-number {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 11px;
+            color: var(--muted);
+            letter-spacing: 1.5px;
+            margin-bottom: 8px;
+        }
 
-    .q-text {
-      font-size: 16px;
-      font-weight: 600;
-      line-height: 1.5;
-      margin-bottom: 16px;
-      color: #fff;
-    }
+        .q-text {
+            font-size: 16px;
+            font-weight: 600;
+            line-height: 1.5;
+            margin-bottom: 16px;
+            color: #fff;
+        }
 
-    /* MC options */
-    .options {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
+        /* MC options */
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
 
-    .option-label {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      padding: 11px 14px;
-      border: 1px solid rgba(255,255,255,0.15);
-      border-radius: 8px;
-      cursor: pointer;
-      transition: background 0.2s, border-color 0.2s;
-      font-size: 15px;
-    }
+        .option-label {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 11px 14px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.2s, border-color 0.2s;
+            font-size: 15px;
+        }
 
-    .option-label:hover {
-      background: rgba(255,255,255,0.07);
-      border-color: rgba(255,255,255,0.35);
-    }
+        .option-label:hover {
+            background: rgba(255, 255, 255, 0.07);
+            border-color: rgba(255, 255, 255, 0.35);
+        }
 
-    .option-label input[type="radio"] {
-      accent-color: #fff;
-      width: 16px;
-      height: 16px;
-      flex-shrink: 0;
-    }
+        .option-label input[type="radio"] {
+            accent-color: #fff;
+            width: 16px;
+            height: 16px;
+            flex-shrink: 0;
+        }
 
-    .option-label:has(input:checked) {
-      background: var(--correct-bg);
-      border-color: rgba(255,255,255,0.5);
-    }
+        .option-label:has(input:checked) {
+            background: var(--correct-bg);
+            border-color: rgba(255, 255, 255, 0.5);
+        }
 
-    /* T/F */
-    .tf-options {
-      display: flex;
-      gap: 12px;
-    }
+        /* T/F */
+        .tf-options {
+            display: flex;
+            gap: 12px;
+        }
 
-    .tf-label {
-      flex: 1;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      padding: 12px;
-      border: 1px solid rgba(255,255,255,0.15);
-      border-radius: 8px;
-      cursor: pointer;
-      font-size: 15px;
-      font-weight: 600;
-      transition: background 0.2s, border-color 0.2s;
-    }
+        .tf-label {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 15px;
+            font-weight: 600;
+            transition: background 0.2s, border-color 0.2s;
+        }
 
-    .tf-label:hover { background: rgba(255,255,255,0.07); border-color: rgba(255,255,255,0.35); }
-    .tf-label input[type="radio"] { accent-color: #fff; width: 16px; height: 16px; }
-    .tf-label:has(input:checked) { background: var(--correct-bg); border-color: rgba(255,255,255,0.5); }
+        .tf-label:hover {
+            background: rgba(255, 255, 255, 0.07);
+            border-color: rgba(255, 255, 255, 0.35);
+        }
 
-    /* Short answer */
-    .short-answer {
-      width: 100%;
-      background: rgba(0,0,0,0.5);
-      border: 1px solid rgba(255,255,255,0.2);
-      border-radius: 8px;
-      padding: 12px 14px;
-      color: #fff;
-      font-family: 'Rajdhani', sans-serif;
-      font-size: 15px;
-      resize: vertical;
-      min-height: 80px;
-      outline: none;
-      transition: border-color 0.2s, box-shadow 0.2s;
-    }
+        .tf-label input[type="radio"] {
+            accent-color: #fff;
+            width: 16px;
+            height: 16px;
+        }
 
-    .short-answer:focus {
-      border-color: #fff;
-      box-shadow: 0 0 12px rgba(255,255,255,0.2);
-    }
+        .tf-label:has(input:checked) {
+            background: var(--correct-bg);
+            border-color: rgba(255, 255, 255, 0.5);
+        }
 
-    .short-answer::placeholder { color: rgba(255,255,255,0.3); }
+        /* Short answer */
+        .short-answer {
+            width: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            padding: 12px 14px;
+            color: #fff;
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 15px;
+            resize: vertical;
+            min-height: 80px;
+            outline: none;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
 
-    /* ── Submit button ── */
-    .submit-wrap {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 14px;
-    }
+        .short-answer:focus {
+            border-color: #fff;
+            box-shadow: 0 0 12px rgba(255, 255, 255, 0.2);
+        }
 
-    #submit-btn {
-      width: 100%;
-      max-width: 400px;
-      padding: 18px;
-      background: #fff;
-      color: #000;
-      border: none;
-      border-radius: 10px;
-      font-family: 'Orbitron', sans-serif;
-      font-size: 16px;
-      font-weight: 700;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      box-shadow: 0 0 20px rgba(255,255,255,0.3);
-    }
+        .short-answer::placeholder {
+            color: rgba(255, 255, 255, 0.3);
+        }
 
-    #submit-btn:hover {
-      background: #e8e8e8;
-      box-shadow: 0 0 35px rgba(255,255,255,0.5);
-      transform: scale(1.02);
-    }
+        /* ── Submit button ── */
+        .submit-wrap {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 14px;
+        }
 
-    #submit-btn:disabled {
-      opacity: 0.5;
-      cursor: not-allowed;
-      transform: none;
-    }
+        #submit-btn {
+            width: 100%;
+            max-width: 400px;
+            padding: 18px;
+            background: #fff;
+            color: #000;
+            border: none;
+            border-radius: 10px;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 16px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+        }
 
-    #quiz-status {
-      font-family: 'Orbitron', sans-serif;
-      font-size: 13px;
-      font-weight: 700;
-      letter-spacing: 1px;
-      text-align: center;
-      min-height: 20px;
-    }
+        #submit-btn:hover {
+            background: #e8e8e8;
+            box-shadow: 0 0 35px rgba(255, 255, 255, 0.5);
+            transform: scale(1.02);
+        }
 
-    .status-success { color: #fff; text-shadow: 0 0 10px #fff; }
-    .status-error   { color: #fff; text-decoration: underline; }
+        #submit-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
 
-    /* ── Success screen ── */
-    #success-screen {
-      display: none;
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 18px;
-      padding: 60px 40px;
-      text-align: center;
-      backdrop-filter: blur(12px);
-    }
+        #quiz-status {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-align: center;
+            min-height: 20px;
+        }
 
-    #success-screen .check { font-size: 56px; margin-bottom: 20px; }
+        .status-success {
+            color: #fff;
+            text-shadow: 0 0 10px #fff;
+        }
 
-    #success-screen h2 {
-      font-family: 'Orbitron', sans-serif;
-      font-size: 24px;
-      font-weight: 900;
-      letter-spacing: 2px;
-      margin-bottom: 12px;
-      text-shadow: 0 0 15px rgba(255,255,255,0.4);
-    }
+        .status-error {
+            color: #fff;
+            text-decoration: underline;
+        }
 
-    #success-screen p { color: var(--muted); font-size: 16px; line-height: 1.6; }
+        /* ── Success screen ── */
+        #success-screen {
+            display: none;
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            padding: 60px 40px;
+            text-align: center;
+            backdrop-filter: blur(12px);
+        }
 
-    /* progress bar */
-    .progress-bar-wrap {
-      background: rgba(255,255,255,0.08);
-      border-radius: 20px;
-      height: 4px;
-      overflow: hidden;
-    }
+        #success-screen .check {
+            font-size: 56px;
+            margin-bottom: 20px;
+        }
 
-    .progress-bar-fill {
-      height: 100%;
-      background: #fff;
-      border-radius: 20px;
-      transition: width 0.3s ease;
-      width: 0%;
-    }
-  </style>
+        #success-screen h2 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 24px;
+            font-weight: 900;
+            letter-spacing: 2px;
+            margin-bottom: 12px;
+            text-shadow: 0 0 15px rgba(255, 255, 255, 0.4);
+        }
+
+        #success-screen p {
+            color: var(--muted);
+            font-size: 16px;
+            line-height: 1.6;
+        }
+
+        /* progress bar */
+        .progress-bar-wrap {
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 20px;
+            height: 4px;
+            overflow: hidden;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            background: #fff;
+            border-radius: 20px;
+            transition: width 0.3s ease;
+            width: 0%;
+        }
+    </style>
 </head>
+
 <body>
 
-<div class="page-wrap" id="quiz-wrap">
+    <div class="page-wrap" id="quiz-wrap">
 
-  <!-- Header -->
-  <div class="quiz-header">
-    <div class="grade-tag">GRADE 5</div>
-    <h1>Scratch Programming Quiz</h1>
-    <p>Answer all 45 questions carefully. Multiple Choice · True / False · Short Answer</p>
-  </div>
+        <!-- Header -->
+        <div class="quiz-header">
+            <div class="grade-tag">GRADE 5</div>
+            <h1>Scratch Programming Quiz</h1>
+            <p>Answer all 45 questions carefully. Multiple Choice · True / False · Short Answer</p>
+        </div>
 
-  <!-- Student info -->
-  <div class="student-bar">
-    <input type="text" id="s-name" placeholder="Full Name" required />
-    <select id="s-section">
-      <option value="" disabled selected>Select Section</option>
-      <option value="A">Section A</option>
-      <option value="B">Section B</option>
-      <option value="C">Section C</option>
-    </select>
-  </div>
+        <!-- Student info -->
+        <div class="student-bar">
+            <input type="text" id="s-name" placeholder="Full Name" required />
+            <select id="s-section">
+                <option value="" disabled selected>Select Section</option>
+                <option value="A">Section A</option>
+                <option value="B">Section B</option>
+                <option value="C">Section C</option>
+            </select>
+        </div>
 
-  <!-- Progress -->
-  <div class="progress-bar-wrap"><div class="progress-bar-fill" id="progress-fill"></div></div>
+        <!-- Progress -->
+        <div class="progress-bar-wrap">
+            <div class="progress-bar-fill" id="progress-fill"></div>
+        </div>
 
-  <!-- ════════════════════ MULTIPLE CHOICE ════════════════════ -->
-  <div class="section-label">Multiple Choice — 30 Questions</div>
+        <!-- ════════════════════ MULTIPLE CHOICE ════════════════════ -->
+        <div class="section-label">Multiple Choice — 30 Questions</div>
 
-  <!-- Q1 -->
-  <div class="question-card">
-    <div class="q-number">QUESTION 1 OF 45</div>
-    <div class="q-text">What is Scratch mainly used for?</div>
-    <div class="options">
-      <label class="option-label"><input type="radio" name="q1" value="A"> A. Writing books</label>
-      <label class="option-label"><input type="radio" name="q1" value="B"> B. Creating games and animations</label>
-      <label class="option-label"><input type="radio" name="q1" value="C"> C. Building houses</label>
-      <label class="option-label"><input type="radio" name="q1" value="D"> D. Editing videos</label>
+        <!-- Q1 -->
+        <div class="question-card">
+            <div class="q-number">QUESTION 1 OF 45</div>
+            <div class="q-text">What is Scratch mainly used for?</div>
+            <div class="options">
+                <label class="option-label"><input type="radio" name="q1" value="A"> A. Writing books</label>
+                <label class="option-label"><input type="radio" name="q1" value="B"> B. Creating games and
+                    animations</label>
+                <label class="option-label"><input type="radio" name="q1" value="C"> C. Building houses</label>
+                <label class="option-label"><input type="radio" name="q1" value="D"> D. Editing videos</label>
+            </div>
+        </div>
+
+        <!-- Q2 -->
+        <div class="question-card">
+            <div class="q-number">QUESTION 2 OF 45</div>
+            <div class="q-text">Which block starts a Scratch program?</div>
+            <div class="options">
+                <label class="option-label"><input type="radio" name="q2" value="A"> A. Move 10 steps</label>
+                <label class="option-label"><input type="radio" name="q2" value="B"> B. Repeat</label>
+                <label class="option-label"><input type="radio" name="q2" value="C"> C. When green flag clicked</label>
+                <label class="option-label"><input type="radio" name="q2" value="D"> D. Say Hello</label>
+            </div>
+        </div>
+
+        <!-- Q3 -->
+        <div class="question-card">
+            <div class="q-number">QUESTION 3 OF 45</div>
+            <div class="q-text">What is a character in Scratch called?</div>
+            <div class="options">
+                <label class="option-label"><input type="radio" name="q3" value="A"> A. Actor</label>
+                <label class="option-label"><input type="radio" name="q3" value="B"> B. Sprite</label>
+                <label class="option-label"><input type="radio" name="q3" value="C"> C. Player</label>
+                <label class="option-label"><input type="radio" name="q3" value="D"> D. Shape</label>
+            </div>
+        </div>
+
+        <!-- Q4 -->
+        <div class="question-card">
+            <div class="q-number">QUESTION 4 OF 45</div>
+            <div class="q-text">Which category contains movement blocks?</div>
+            <div class="options">
+                <label class="option-label"><input type="radio" name="q4" value="A"> A. Looks</label>
+                <label class="option-label"><input type="radio" name="q4" value="B"> B. Sound</label>
+                <label class="option-label"><input type="radio" name="q4" value="C"> C. Motion</label>
+                <label class="option-label"><input type="radio" name="q4" value="D"> D. Events</label>
+            </div>
+        </div>
+
+        <!-- Q5 -->
+        <div class="question-card">
+            <div class="q-number">QUESTION 5 OF 45</div>
+            <div class="q-text">What does the "move 10 steps" block do?</div>
+            <div class="options">
+                <label class="option-label"><input type="radio" name="q5" value="A"> A. Changes color</label>
+                <label class="option-label"><input type="radio" name="q5" value="B"> B. Makes the sprite jump</label>
+                <label class="option-label"><input type="radio" name="q5" value="C"> C. Moves the sprite forward</label>
+                <label class="option-label"><input type="radio" name="q5" value="D"> D. Stops the program</label>
+            </div>
+        </div>
+
+        <!-- Q6 -->
+        <div class="question-card">
+            <div class="q-number">QUESTION 6 OF 45</div>
+            <div class="q-text">Which button runs the project?</div>
+            <div class="options">
+                <label class="option-label"><input type="radio" name="q6" value="A"> A. Red button</label>
+                <label class="option-label"><input type="radio" name="q6" value="B"> B. Green flag</label>
+                <label class="option-label"><input type="radio" name="q6" value="C"> C. Space key</label>
+                <label class="option-label"><input type="radio" name="q6" value="D"> D. Mouse click</label>
+            </div>
+        </div>
+
+        <!-- Q7 -->
+        <div class="question-card">
+            <div class="q-number">QUESTION 7 OF 45</div>
+            <div class="q-text">Which block repeats actions many times?</div>
+            <div class="options">
+                <label class="option-label"><input type="radio" name="q7" value="A"> A. Wait</label>
+                <label class="option-label"><input type="radio" name="q7" value="B"> B. Repeat</label>
+                <label class="option-label"><input type="radio" name="q7" value="C"> C. Say</label>
+                <label class="option-label"><input type="radio" name="q7" value="D"> D. Hide</label>
+            </div>
+        </div>
+
+        <!-- Q8 -->
+        <div class="question-card">
+            <div class="q-number">QUESTION 8 OF 45</div>
+            <div class="q-text">Which category is used to make sprites talk?</div>
+            <div class="options">
+                <label class="option-label"><input type="radio" name="q8" value="A"> A. Looks</label>
+                <label class="option-label"><input type="radio" name="q8" value="B"> B. Motion</label>
+                <label class="option-label"><input type="radio" name="q8" value="C"> C. Control</label>
+                <label class="option-label"><input type="radio" name="q8" value="D"> D. Sensing</label>
+            </div>
+        </div>
+
+        <!-- Q9 -->
+        <div class="question-card">
+            <div class="q-number">QUESTION 9 OF 45</div>
+            <div class="q-text">What happens when you click the red stop sign?</div>
+            <div class="options">
+                <label class="option-label"><input type="radio" name="q9" value="A"> A. The sprite disappears</label>
+                <label class="option-label"><input type="radio" name="q9" value="B"> B. The project saves</label>
+                <label class="option-label"><input type="radio" name="q9" value="C"> C. The program stops</label>
+                <label class="option-label"><input type="radio" name="q9" value="D"> D. The sound increases</label>
+            </div>
+        </div>
+
+        <!-- Q10 -->
+        <div class="question-card">
+            <div class="q-number">QUESTION 10 OF 45</div>
+            <div class="q-text">Which block can play music or sounds?</div>
+            <div class="options">
+                <label class="option-label"><input type="radio" name="q10" value="A"> A. Motion</label>
+                <label class="option-label"><input type="radio" name="q10" value="B"> B. Looks</label>
+                <label class="option-label"><input type="radio" name="q10" value="C"> C. Sound</label>
+                <label class="option-label"><input type="radio" name="q10" value="D"> D. Events</label>
+            </div>
+        </div>
+
+        <!-- Q11 -->
+        <div class="question-card">
+            <div class="q-number">QUESTION 11 OF 45</div>
+            <div class="q-text">What does the "wait" block do?</div>
+            <div class="options">
+                <label class="option-label"><input type="radio" name="q11" value="A"> A. Speeds up the sprite</label>
+                <label class="option-label"><input type="radio" name="q11" value="B"> B. Pauses the script</label>
+                <label class="option-label"><input type="radio" name="q11" value="C"> C. Deletes the sprite</label>
+                <label class="option-label"><input type="radio" name="q11" value="D"> D. Changes the background</label>
+            </div>
+        </div>
+
+        <!-- Q12 -->
+        <div class="question-card">
+            <div class="q-number">QUESTION 12 OF 45</div>
+            <div class="q-text">Which block category controls loops and stopping?</div>
+            <div class="options">
+                <label class="option-label"><input type="radio" name="q12" value="A"> A. Motion</label>
+                <label class="option-label"><input type="radio" name="q12" value="B"> B. Looks</label>
+                <label class="option-label"><input type="radio" name="q12" value="C"> C. Control</label>
+                <label class="option-label"><input type="radio" name="q12" value="D"> D. Sound</label>
+            </div>
+        </div>
+
+        <!-- Q13 -->
+        <div class="question-card">
+            <div class="q-number">QUESTION 13 OF 45</div>
+            <div class="q-text">What is the stage in Scratch?</div>
+            <div class="options">
+                <label class="option-label"><input type="radio" name="q13" value="A"> A. A drawing tool</label>
+                <label class="option-label"><input type="radio" name="q13" value="B"> B. The area where projects
+                    run</label>
+                <label class="option-label"><input type="radio" name="q13" value="C"> C. A sound editor</label>
+                <label class="option-label"><input type="radio" name="q13" value="D"> D. A coding block</label>
+            </div>
+        </div>
+
+        <!-- Q14 -->
+        <div class="question-card">
+            <div class="q-number">QUESTION 14 OF 45</div>
+            <div class="q-text">Which block checks if two sprites touch?</div>
+            <div class="options">
+                <label class="option-label"><input type="radio" name="q14" value="A"> A. If touching</label>
+                <label class="option-label"><input type="radio" name="q14" value="B"> B. Move</label>
+                <label class="option-label"><input type="radio" name="q14" value="C"> C. Say</label>
+                <label class="option-label"><input type="radio" name="q14" value="D"> D. Repeat</label>
+            </div>
+        </div>
+
+        <!-- Q15 -->
+        <div class="question-card">
+            <div class="q-number">QUESTION 15 OF 45</div>
+            <div class="q-text">Which category contains the "if" block?</div>
+            <div class="options">
+                <label class="option-label"><input type="radio" name="q15" value="A"> A. Events</label>
+                <label class="option-label"><input type="radio" name="q15" value="B"> B. Motion</label>
+                <label class="option-label"><input type="radio" name="q15" value="C"> C. Control</label>
+                <label class="option-label"><input type="radio" name="q15" value="D"> D. Looks</label>
+            </div>
+        </div>
+
+        <!-- Q16 -->
+        <div class="question-card">
+            <div class="q-number">QUESTION 16 OF 45</div>
+            <div class="q-text">Which block makes a sprite spin?</div>
+            <div class="options">
+                <label class="option-label"><input type="radio" name="q16" value="A"> A. Turn block</label>
+                <label class="option-label"><input type="radio" name="q16" value="B"> B. Wait block</label>
+                <label class="option-label"><input type="radio" name="q16" value="C"> C. Hide block</label>
+                <label class="option-label"><input type="radio" name="q16" value="D"> D. Ask block</label>
+            </div>
+        </div>
+
+        <!-- Q17 -->
+        <div class="question-card">
+            <div class="q-number">QUESTION 17 OF 45</div>
+            <div class="q-text">Which category contains keyboard events?</div>
+            <div class="options">
+                <label class="option-label"><input type="radio" name="q17" value="A"> A. Events</label>
+                <label class="option-label"><input type="radio" name="q17" value="B"> B. Motion</label>
+                <label class="option-label"><input type="radio" name="q17" value="C"> C. Looks</label>
+                <label class="option-label"><input type="radio" name="q17" value="D"> D. Variables</label>
+            </div>
+        </div>
+
+        <!-- Q18 -->
+        <div class="question-card">
+            <div class="q-number">QUESTION 18 OF 45</div>
+            <div class="q-text">What does a loop do?</div>
+            <div class="options">
+                <label class="option-label"><input type="radio" name="q18" value="A"> A. Ends the game</label>
+                <label class="option-label"><input type="radio" name="q18" value="B"> B. Repeats instructions</label>
+                <label class="option-label"><input type="radio" name="q18" value="C"> C. Deletes blocks</label>
+                <label class="option-label"><input type="radio" name="q18" value="D"> D. Saves the project</label>
+            </div>
+        </div>
+
+        <!-- Q19 -->
+        <div class="question-card">
+            <div class="q-number">QUESTION 19 OF 45</div>
+            <div class="q-text">Which block changes the sprite's costume?</div>
+            <div class="options">
+                <label class="option-label"><input type="radio" name="q19" value="A"> A. Next costume</label>
+                <label class="option-label"><input type="radio" name="q19" value="B"> B. Move steps</label>
+                <label class="option-label"><input type="radio" name="q19" value="C"> C. Play sound</label>
+                <label class="option-label"><input type="radio" name="q19" value="D"> D. Ask question</label>
+            </div>
+        </div>
+
+        <!-- Q20 -->
+        <div class="question-card">
+            <div class="q-number">QUESTION 20 OF 45</div>
+            <div class="q-text">What are costumes used for?</div>
+            <div class="options">
+                <label class="option-label"><input type="radio" name="q20" value="A"> A. Adding music</label>
+                <label class="option-label"><input type="radio" name="q20" value="B"> B. Changing sprite
+                    appearance</label>
+                <label class="option-label"><input type="radio" name="q20" value="C"> C. Writing code</label>
+                <label class="option-label"><input type="radio" name="q20" value="D"> D. Saving projects</label>
+            </div>
+        </div>
+
+        <!-- Q21 -->
+        <div class="question-card">
+            <div class="q-number">QUESTION 21 OF 45</div>
+            <div class="q-text">Which category helps create scores?</div>
+            <div class="options">
+                <label class="option-label"><input type="radio" name="q21" value="A"> A. Variables</label>
+                <label class="option-label"><input type="radio" name="q21" value="B"> B. Motion</label>
+                <label class="option-label"><input type="radio" name="q21" value="C"> C. Sound</label>
+                <label class="option-label"><input type="radio" name="q21" value="D"> D. Looks</label>
+            </div>
+        </div>
+
+        <!-- Q22 -->
+        <div class="question-card">
+            <div class="q-number">QUESTION 22 OF 45</div>
+            <div class="q-text">Which block asks the user a question?</div>
+            <div class="options">
+                <label class="option-label"><input type="radio" name="q22" value="A"> A. Ask and wait</label>
+                <label class="option-label"><input type="radio" name="q22" value="B"> B. Move steps</label>
+                <label class="option-label"><input type="radio" name="q22" value="C"> C. Repeat forever</label>
+                <label class="option-label"><input type="radio" name="q22" value="D"> D. Show</label>
+            </div>
+        </div>
+
+        <!-- Q23 -->
+        <div class="question-card">
+            <div class="q-number">QUESTION 23 OF 45</div>
+            <div class="q-text">What does the "forever" block do?</div>
+            <div class="options">
+                <label class="option-label"><input type="radio" name="q23" value="A"> A. Stops the project</label>
+                <label class="option-label"><input type="radio" name="q23" value="B"> B. Repeats forever until
+                    stopped</label>
+                <label class="option-label"><input type="radio" name="q23" value="C"> C. Plays music once</label>
+                <label class="option-label"><input type="radio" name="q23" value="D"> D. Changes the background</label>
+            </div>
+        </div>
+
+        <!-- Q24 -->
+        <div class="question-card">
+            <div class="q-number">QUESTION 24 OF 45</div>
+            <div class="q-text">Which tool is used to draw sprites?</div>
+            <div class="options">
+                <label class="option-label"><input type="radio" name="q24" value="A"> A. Paint Editor</label>
+                <label class="option-label"><input type="radio" name="q24" value="B"> B. Music Tool</label>
+                <label class="option-label"><input type="radio" name="q24" value="C"> C. Variable Tool</label>
+                <label class="option-label"><input type="radio" name="q24" value="D"> D. Stage Tool</label>
+            </div>
+        </div>
+
+        <!-- Q25 -->
+        <div class="question-card">
+            <div class="q-number">QUESTION 25 OF 45</div>
+            <div class="q-text">Which block changes the background?</div>
+            <div class="options">
+                <label class="option-label"><input type="radio" name="q25" value="A"> A. Next backdrop</label>
+                <label class="option-label"><input type="radio" name="q25" value="B"> B. Turn right</label>
+                <label class="option-label"><input type="radio" name="q25" value="C"> C. Wait</label>
+                <label class="option-label"><input type="radio" name="q25" value="D"> D. Hide</label>
+            </div>
+        </div>
+
+        <!-- Q26 -->
+        <div class="question-card">
+            <div class="q-number">QUESTION 26 OF 45</div>
+            <div class="q-text">Which category detects keyboard presses?</div>
+            <div class="options">
+                <label class="option-label"><input type="radio" name="q26" value="A"> A. Looks</label>
+                <label class="option-label"><input type="radio" name="q26" value="B"> B. Sensing</label>
+                <label class="option-label"><input type="radio" name="q26" value="C"> C. Motion</label>
+                <label class="option-label"><input type="radio" name="q26" value="D"> D. Sound</label>
+            </div>
+        </div>
+
+        <!-- Q27 -->
+        <div class="question-card">
+            <div class="q-number">QUESTION 27 OF 45</div>
+            <div class="q-text">What is a script in Scratch?</div>
+            <div class="options">
+                <label class="option-label"><input type="radio" name="q27" value="A"> A. A background image</label>
+                <label class="option-label"><input type="radio" name="q27" value="B"> B. A group of coding
+                    blocks</label>
+                <label class="option-label"><input type="radio" name="q27" value="C"> C. A sound file</label>
+                <label class="option-label"><input type="radio" name="q27" value="D"> D. A costume</label>
+            </div>
+        </div>
+
+        <!-- Q28 -->
+        <div class="question-card">
+            <div class="q-number">QUESTION 28 OF 45</div>
+            <div class="q-text">Which block can make a sprite invisible?</div>
+            <div class="options">
+                <label class="option-label"><input type="radio" name="q28" value="A"> A. Show</label>
+                <label class="option-label"><input type="radio" name="q28" value="B"> B. Hide</label>
+                <label class="option-label"><input type="radio" name="q28" value="C"> C. Wait</label>
+                <label class="option-label"><input type="radio" name="q28" value="D"> D. Repeat</label>
+            </div>
+        </div>
+
+        <!-- Q29 -->
+        <div class="question-card">
+            <div class="q-number">QUESTION 29 OF 45</div>
+            <div class="q-text">What does the "broadcast" block do?</div>
+            <div class="options">
+                <label class="option-label"><input type="radio" name="q29" value="A"> A. Deletes sprites</label>
+                <label class="option-label"><input type="radio" name="q29" value="B"> B. Sends messages between
+                    sprites</label>
+                <label class="option-label"><input type="radio" name="q29" value="C"> C. Changes costumes</label>
+                <label class="option-label"><input type="radio" name="q29" value="D"> D. Stops sounds</label>
+            </div>
+        </div>
+
+        <!-- Q30 -->
+        <div class="question-card">
+            <div class="q-number">QUESTION 30 OF 45</div>
+            <div class="q-text">Which coding concept means making decisions?</div>
+            <div class="options">
+                <label class="option-label"><input type="radio" name="q30" value="A"> A. Looping</label>
+                <label class="option-label"><input type="radio" name="q30" value="B"> B. Variables</label>
+                <label class="option-label"><input type="radio" name="q30" value="C"> C. Conditions</label>
+                <label class="option-label"><input type="radio" name="q30" value="D"> D. Motion</label>
+            </div>
+        </div>
+
+        <!-- ════════════════════ TRUE / FALSE ════════════════════ -->
+        <div class="section-label">True or False — 10 Questions</div>
+
+        <!-- TF1 -->
+        <div class="question-card">
+            <div class="q-number">QUESTION 31 OF 45</div>
+            <div class="q-text">Scratch uses coding blocks instead of typing code.</div>
+            <div class="tf-options">
+                <label class="tf-label"><input type="radio" name="tf1" value="True"> True</label>
+                <label class="tf-label"><input type="radio" name="tf1" value="False"> False</label>
+            </div>
+        </div>
+
+        <!-- TF2 -->
+        <div class="question-card">
+            <div class="q-number">QUESTION 32 OF 45</div>
+            <div class="q-text">Sprites cannot move in Scratch.</div>
+            <div class="tf-options">
+                <label class="tf-label"><input type="radio" name="tf2" value="True"> True</label>
+                <label class="tf-label"><input type="radio" name="tf2" value="False"> False</label>
+            </div>
+        </div>
+
+        <!-- TF3 -->
+        <div class="question-card">
+            <div class="q-number">QUESTION 33 OF 45</div>
+            <div class="q-text">The green flag starts the project.</div>
+            <div class="tf-options">
+                <label class="tf-label"><input type="radio" name="tf3" value="True"> True</label>
+                <label class="tf-label"><input type="radio" name="tf3" value="False"> False</label>
+            </div>
+        </div>
+
+        <!-- TF4 -->
+        <div class="question-card">
+            <div class="q-number">QUESTION 34 OF 45</div>
+            <div class="q-text">A loop repeats instructions.</div>
+            <div class="tf-options">
+                <label class="tf-label"><input type="radio" name="tf4" value="True"> True</label>
+                <label class="tf-label"><input type="radio" name="tf4" value="False"> False</label>
+            </div>
+        </div>
+
+        <!-- TF5 -->
+        <div class="question-card">
+            <div class="q-number">QUESTION 35 OF 45</div>
+            <div class="q-text">Scratch can only make games.</div>
+            <div class="tf-options">
+                <label class="tf-label"><input type="radio" name="tf5" value="True"> True</label>
+                <label class="tf-label"><input type="radio" name="tf5" value="False"> False</label>
+            </div>
+        </div>
+
+        <!-- TF6 -->
+        <div class="question-card">
+            <div class="q-number">QUESTION 36 OF 45</div>
+            <div class="q-text">Variables can store scores.</div>
+            <div class="tf-options">
+                <label class="tf-label"><input type="radio" name="tf6" value="True"> True</label>
+                <label class="tf-label"><input type="radio" name="tf6" value="False"> False</label>
+            </div>
+        </div>
+
+        <!-- TF7 -->
+        <div class="question-card">
+            <div class="q-number">QUESTION 37 OF 45</div>
+            <div class="q-text">The stage is where sprites perform actions.</div>
+            <div class="tf-options">
+                <label class="tf-label"><input type="radio" name="tf7" value="True"> True</label>
+                <label class="tf-label"><input type="radio" name="tf7" value="False"> False</label>
+            </div>
+        </div>
+
+        <!-- TF8 -->
+        <div class="question-card">
+            <div class="q-number">QUESTION 38 OF 45</div>
+            <div class="q-text">Sounds cannot be added in Scratch projects.</div>
+            <div class="tf-options">
+                <label class="tf-label"><input type="radio" name="tf8" value="True"> True</label>
+                <label class="tf-label"><input type="radio" name="tf8" value="False"> False</label>
+            </div>
+        </div>
+
+        <!-- TF9 -->
+        <div class="question-card">
+            <div class="q-number">QUESTION 39 OF 45</div>
+            <div class="q-text">The "forever" block runs only once.</div>
+            <div class="tf-options">
+                <label class="tf-label"><input type="radio" name="tf9" value="True"> True</label>
+                <label class="tf-label"><input type="radio" name="tf9" value="False"> False</label>
+            </div>
+        </div>
+
+        <!-- TF10 -->
+        <div class="question-card">
+            <div class="q-number">QUESTION 40 OF 45</div>
+            <div class="q-text">Scratch is good for beginners learning programming.</div>
+            <div class="tf-options">
+                <label class="tf-label"><input type="radio" name="tf10" value="True"> True</label>
+                <label class="tf-label"><input type="radio" name="tf10" value="False"> False</label>
+            </div>
+        </div>
+
+        <!-- ════════════════════ SHORT ANSWER ════════════════════ -->
+        <div class="section-label">Short Answer — 5 Questions</div>
+
+        <!-- SA1 -->
+        <div class="question-card">
+            <div class="q-number">QUESTION 41 OF 45</div>
+            <div class="q-text">What is a sprite in Scratch?</div>
+            <textarea class="short-answer" id="sa1" placeholder="Write your answer here..."></textarea>
+        </div>
+
+        <!-- SA2 -->
+        <div class="question-card">
+            <div class="q-number">QUESTION 42 OF 45</div>
+            <div class="q-text">What does the green flag do?</div>
+            <textarea class="short-answer" id="sa2" placeholder="Write your answer here..."></textarea>
+        </div>
+
+        <!-- SA3 -->
+        <div class="question-card">
+            <div class="q-number">QUESTION 43 OF 45</div>
+            <div class="q-text">Name one block category in Scratch.</div>
+            <textarea class="short-answer" id="sa3" placeholder="Write your answer here..."></textarea>
+        </div>
+
+        <!-- SA4 -->
+        <div class="question-card">
+            <div class="q-number">QUESTION 44 OF 45</div>
+            <div class="q-text">What is a variable used for?</div>
+            <textarea class="short-answer" id="sa4" placeholder="Write your answer here..."></textarea>
+        </div>
+
+        <!-- SA5 -->
+        <div class="question-card">
+            <div class="q-number">QUESTION 45 OF 45</div>
+            <div class="q-text">What is the purpose of the "repeat" block?</div>
+            <textarea class="short-answer" id="sa5" placeholder="Write your answer here..."></textarea>
+        </div>
+
+        <!-- Submit -->
+        <div class="submit-wrap">
+            <button id="submit-btn" type="button">Submit Quiz</button>
+            <p id="quiz-status"></p>
+        </div>
+
     </div>
-  </div>
 
-  <!-- Q2 -->
-  <div class="question-card">
-    <div class="q-number">QUESTION 2 OF 45</div>
-    <div class="q-text">Which block starts a Scratch program?</div>
-    <div class="options">
-      <label class="option-label"><input type="radio" name="q2" value="A"> A. Move 10 steps</label>
-      <label class="option-label"><input type="radio" name="q2" value="B"> B. Repeat</label>
-      <label class="option-label"><input type="radio" name="q2" value="C"> C. When green flag clicked</label>
-      <label class="option-label"><input type="radio" name="q2" value="D"> D. Say Hello</label>
+    <!-- Success Screen -->
+    <div id="success-screen">
+        <div class="check">✅</div>
+        <h2>Quiz Submitted!</h2>
+        <p>Your answers have been recorded.<br>You can close this tab now.</p>
     </div>
-  </div>
 
-  <!-- Q3 -->
-  <div class="question-card">
-    <div class="q-number">QUESTION 3 OF 45</div>
-    <div class="q-text">What is a character in Scratch called?</div>
-    <div class="options">
-      <label class="option-label"><input type="radio" name="q3" value="A"> A. Actor</label>
-      <label class="option-label"><input type="radio" name="q3" value="B"> B. Sprite</label>
-      <label class="option-label"><input type="radio" name="q3" value="C"> C. Player</label>
-      <label class="option-label"><input type="radio" name="q3" value="D"> D. Shape</label>
-    </div>
-  </div>
+    <script>
+        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycby2bGGtFOufwMHRbg_stSmkK0oWjli6zVNJGfweo7HMfYybMlp0my41oCa9cQNpk3k/exec";
 
-  <!-- Q4 -->
-  <div class="question-card">
-    <div class="q-number">QUESTION 4 OF 45</div>
-    <div class="q-text">Which category contains movement blocks?</div>
-    <div class="options">
-      <label class="option-label"><input type="radio" name="q4" value="A"> A. Looks</label>
-      <label class="option-label"><input type="radio" name="q4" value="B"> B. Sound</label>
-      <label class="option-label"><input type="radio" name="q4" value="C"> C. Motion</label>
-      <label class="option-label"><input type="radio" name="q4" value="D"> D. Events</label>
-    </div>
-  </div>
+        // Pre-fill name + section from URL params (passed from main page)
+        const params = new URLSearchParams(window.location.search);
+        if (params.get("name")) document.getElementById("s-name").value = params.get("name");
+        if (params.get("section")) document.getElementById("s-section").value = params.get("section");
 
-  <!-- Q5 -->
-  <div class="question-card">
-    <div class="q-number">QUESTION 5 OF 45</div>
-    <div class="q-text">What does the "move 10 steps" block do?</div>
-    <div class="options">
-      <label class="option-label"><input type="radio" name="q5" value="A"> A. Changes color</label>
-      <label class="option-label"><input type="radio" name="q5" value="B"> B. Makes the sprite jump</label>
-      <label class="option-label"><input type="radio" name="q5" value="C"> C. Moves the sprite forward</label>
-      <label class="option-label"><input type="radio" name="q5" value="D"> D. Stops the program</label>
-    </div>
-  </div>
+        // Progress bar — update as user answers
+        const totalQ = 45;
+        function updateProgress() {
+            let answered = 0;
+            // MC (q1–q30) + TF (tf1–tf10)
+            ["q1", "q2", "q3", "q4", "q5", "q6", "q7", "q8", "q9", "q10",
+                "q11", "q12", "q13", "q14", "q15", "q16", "q17", "q18", "q19", "q20",
+                "q21", "q22", "q23", "q24", "q25", "q26", "q27", "q28", "q29", "q30",
+                "tf1", "tf2", "tf3", "tf4", "tf5", "tf6", "tf7", "tf8", "tf9", "tf10"
+            ].forEach(name => {
+                if (document.querySelector(`input[name="${name}"]:checked`)) answered++;
+            });
+            // Short answers
+            ["sa1", "sa2", "sa3", "sa4", "sa5"].forEach(id => {
+                if (document.getElementById(id).value.trim()) answered++;
+            });
+            document.getElementById("progress-fill").style.width = (answered / totalQ * 100) + "%";
+        }
 
-  <!-- Q6 -->
-  <div class="question-card">
-    <div class="q-number">QUESTION 6 OF 45</div>
-    <div class="q-text">Which button runs the project?</div>
-    <div class="options">
-      <label class="option-label"><input type="radio" name="q6" value="A"> A. Red button</label>
-      <label class="option-label"><input type="radio" name="q6" value="B"> B. Green flag</label>
-      <label class="option-label"><input type="radio" name="q6" value="C"> C. Space key</label>
-      <label class="option-label"><input type="radio" name="q6" value="D"> D. Mouse click</label>
-    </div>
-  </div>
+        document.addEventListener("change", updateProgress);
+        document.addEventListener("input", updateProgress);
 
-  <!-- Q7 -->
-  <div class="question-card">
-    <div class="q-number">QUESTION 7 OF 45</div>
-    <div class="q-text">Which block repeats actions many times?</div>
-    <div class="options">
-      <label class="option-label"><input type="radio" name="q7" value="A"> A. Wait</label>
-      <label class="option-label"><input type="radio" name="q7" value="B"> B. Repeat</label>
-      <label class="option-label"><input type="radio" name="q7" value="C"> C. Say</label>
-      <label class="option-label"><input type="radio" name="q7" value="D"> D. Hide</label>
-    </div>
-  </div>
+        // Submit
+        document.getElementById("submit-btn").addEventListener("click", async () => {
+            const name = document.getElementById("s-name").value.trim();
+            const section = document.getElementById("s-section").value;
 
-  <!-- Q8 -->
-  <div class="question-card">
-    <div class="q-number">QUESTION 8 OF 45</div>
-    <div class="q-text">Which category is used to make sprites talk?</div>
-    <div class="options">
-      <label class="option-label"><input type="radio" name="q8" value="A"> A. Looks</label>
-      <label class="option-label"><input type="radio" name="q8" value="B"> B. Motion</label>
-      <label class="option-label"><input type="radio" name="q8" value="C"> C. Control</label>
-      <label class="option-label"><input type="radio" name="q8" value="D"> D. Sensing</label>
-    </div>
-  </div>
+            if (!name) { alert("Please enter your full name."); return; }
+            if (!section) { alert("Please select your section."); return; }
 
-  <!-- Q9 -->
-  <div class="question-card">
-    <div class="q-number">QUESTION 9 OF 45</div>
-    <div class="q-text">What happens when you click the red stop sign?</div>
-    <div class="options">
-      <label class="option-label"><input type="radio" name="q9" value="A"> A. The sprite disappears</label>
-      <label class="option-label"><input type="radio" name="q9" value="B"> B. The project saves</label>
-      <label class="option-label"><input type="radio" name="q9" value="C"> C. The program stops</label>
-      <label class="option-label"><input type="radio" name="q9" value="D"> D. The sound increases</label>
-    </div>
-  </div>
+            // Gather MC answers
+            const mc = {};
+            for (let i = 1; i <= 30; i++) {
+                const sel = document.querySelector(`input[name="q${i}"]:checked`);
+                mc[`MC_Q${i}`] = sel ? sel.value : "";
+            }
 
-  <!-- Q10 -->
-  <div class="question-card">
-    <div class="q-number">QUESTION 10 OF 45</div>
-    <div class="q-text">Which block can play music or sounds?</div>
-    <div class="options">
-      <label class="option-label"><input type="radio" name="q10" value="A"> A. Motion</label>
-      <label class="option-label"><input type="radio" name="q10" value="B"> B. Looks</label>
-      <label class="option-label"><input type="radio" name="q10" value="C"> C. Sound</label>
-      <label class="option-label"><input type="radio" name="q10" value="D"> D. Events</label>
-    </div>
-  </div>
+            // Gather T/F answers
+            const tf = {};
+            for (let i = 1; i <= 10; i++) {
+                const sel = document.querySelector(`input[name="tf${i}"]:checked`);
+                tf[`TF_Q${i}`] = sel ? sel.value : "";
+            }
 
-  <!-- Q11 -->
-  <div class="question-card">
-    <div class="q-number">QUESTION 11 OF 45</div>
-    <div class="q-text">What does the "wait" block do?</div>
-    <div class="options">
-      <label class="option-label"><input type="radio" name="q11" value="A"> A. Speeds up the sprite</label>
-      <label class="option-label"><input type="radio" name="q11" value="B"> B. Pauses the script</label>
-      <label class="option-label"><input type="radio" name="q11" value="C"> C. Deletes the sprite</label>
-      <label class="option-label"><input type="radio" name="q11" value="D"> D. Changes the background</label>
-    </div>
-  </div>
+            // Gather short answers
+            const sa = {};
+            for (let i = 1; i <= 5; i++) {
+                sa[`SA_Q${i}`] = document.getElementById(`sa${i}`).value.trim();
+            }
 
-  <!-- Q12 -->
-  <div class="question-card">
-    <div class="q-number">QUESTION 12 OF 45</div>
-    <div class="q-text">Which block category controls loops and stopping?</div>
-    <div class="options">
-      <label class="option-label"><input type="radio" name="q12" value="A"> A. Motion</label>
-      <label class="option-label"><input type="radio" name="q12" value="B"> B. Looks</label>
-      <label class="option-label"><input type="radio" name="q12" value="C"> C. Control</label>
-      <label class="option-label"><input type="radio" name="q12" value="D"> D. Sound</label>
-    </div>
-  </div>
+            const payload = {
+                name,
+                grade: "5",
+                section,
+                type: "quiz-grade5",
+                ...mc,
+                ...tf,
+                ...sa
+            };
 
-  <!-- Q13 -->
-  <div class="question-card">
-    <div class="q-number">QUESTION 13 OF 45</div>
-    <div class="q-text">What is the stage in Scratch?</div>
-    <div class="options">
-      <label class="option-label"><input type="radio" name="q13" value="A"> A. A drawing tool</label>
-      <label class="option-label"><input type="radio" name="q13" value="B"> B. The area where projects run</label>
-      <label class="option-label"><input type="radio" name="q13" value="C"> C. A sound editor</label>
-      <label class="option-label"><input type="radio" name="q13" value="D"> D. A coding block</label>
-    </div>
-  </div>
+            const btn = document.getElementById("submit-btn");
+            const status = document.getElementById("quiz-status");
+            btn.disabled = true;
+            btn.textContent = "Submitting...";
+            status.textContent = "";
+            status.className = "";
 
-  <!-- Q14 -->
-  <div class="question-card">
-    <div class="q-number">QUESTION 14 OF 45</div>
-    <div class="q-text">Which block checks if two sprites touch?</div>
-    <div class="options">
-      <label class="option-label"><input type="radio" name="q14" value="A"> A. If touching</label>
-      <label class="option-label"><input type="radio" name="q14" value="B"> B. Move</label>
-      <label class="option-label"><input type="radio" name="q14" value="C"> C. Say</label>
-      <label class="option-label"><input type="radio" name="q14" value="D"> D. Repeat</label>
-    </div>
-  </div>
+            try {
+                await fetch(SCRIPT_URL, {
+                    method: "POST",
+                    mode: "no-cors",
+                    body: JSON.stringify(payload)
+                });
 
-  <!-- Q15 -->
-  <div class="question-card">
-    <div class="q-number">QUESTION 15 OF 45</div>
-    <div class="q-text">Which category contains the "if" block?</div>
-    <div class="options">
-      <label class="option-label"><input type="radio" name="q15" value="A"> A. Events</label>
-      <label class="option-label"><input type="radio" name="q15" value="B"> B. Motion</label>
-      <label class="option-label"><input type="radio" name="q15" value="C"> C. Control</label>
-      <label class="option-label"><input type="radio" name="q15" value="D"> D. Looks</label>
-    </div>
-  </div>
+                // Show success screen
+                document.getElementById("quiz-wrap").style.display = "none";
+                document.getElementById("success-screen").style.display = "block";
 
-  <!-- Q16 -->
-  <div class="question-card">
-    <div class="q-number">QUESTION 16 OF 45</div>
-    <div class="q-text">Which block makes a sprite spin?</div>
-    <div class="options">
-      <label class="option-label"><input type="radio" name="q16" value="A"> A. Turn block</label>
-      <label class="option-label"><input type="radio" name="q16" value="B"> B. Wait block</label>
-      <label class="option-label"><input type="radio" name="q16" value="C"> C. Hide block</label>
-      <label class="option-label"><input type="radio" name="q16" value="D"> D. Ask block</label>
-    </div>
-  </div>
-
-  <!-- Q17 -->
-  <div class="question-card">
-    <div class="q-number">QUESTION 17 OF 45</div>
-    <div class="q-text">Which category contains keyboard events?</div>
-    <div class="options">
-      <label class="option-label"><input type="radio" name="q17" value="A"> A. Events</label>
-      <label class="option-label"><input type="radio" name="q17" value="B"> B. Motion</label>
-      <label class="option-label"><input type="radio" name="q17" value="C"> C. Looks</label>
-      <label class="option-label"><input type="radio" name="q17" value="D"> D. Variables</label>
-    </div>
-  </div>
-
-  <!-- Q18 -->
-  <div class="question-card">
-    <div class="q-number">QUESTION 18 OF 45</div>
-    <div class="q-text">What does a loop do?</div>
-    <div class="options">
-      <label class="option-label"><input type="radio" name="q18" value="A"> A. Ends the game</label>
-      <label class="option-label"><input type="radio" name="q18" value="B"> B. Repeats instructions</label>
-      <label class="option-label"><input type="radio" name="q18" value="C"> C. Deletes blocks</label>
-      <label class="option-label"><input type="radio" name="q18" value="D"> D. Saves the project</label>
-    </div>
-  </div>
-
-  <!-- Q19 -->
-  <div class="question-card">
-    <div class="q-number">QUESTION 19 OF 45</div>
-    <div class="q-text">Which block changes the sprite's costume?</div>
-    <div class="options">
-      <label class="option-label"><input type="radio" name="q19" value="A"> A. Next costume</label>
-      <label class="option-label"><input type="radio" name="q19" value="B"> B. Move steps</label>
-      <label class="option-label"><input type="radio" name="q19" value="C"> C. Play sound</label>
-      <label class="option-label"><input type="radio" name="q19" value="D"> D. Ask question</label>
-    </div>
-  </div>
-
-  <!-- Q20 -->
-  <div class="question-card">
-    <div class="q-number">QUESTION 20 OF 45</div>
-    <div class="q-text">What are costumes used for?</div>
-    <div class="options">
-      <label class="option-label"><input type="radio" name="q20" value="A"> A. Adding music</label>
-      <label class="option-label"><input type="radio" name="q20" value="B"> B. Changing sprite appearance</label>
-      <label class="option-label"><input type="radio" name="q20" value="C"> C. Writing code</label>
-      <label class="option-label"><input type="radio" name="q20" value="D"> D. Saving projects</label>
-    </div>
-  </div>
-
-  <!-- Q21 -->
-  <div class="question-card">
-    <div class="q-number">QUESTION 21 OF 45</div>
-    <div class="q-text">Which category helps create scores?</div>
-    <div class="options">
-      <label class="option-label"><input type="radio" name="q21" value="A"> A. Variables</label>
-      <label class="option-label"><input type="radio" name="q21" value="B"> B. Motion</label>
-      <label class="option-label"><input type="radio" name="q21" value="C"> C. Sound</label>
-      <label class="option-label"><input type="radio" name="q21" value="D"> D. Looks</label>
-    </div>
-  </div>
-
-  <!-- Q22 -->
-  <div class="question-card">
-    <div class="q-number">QUESTION 22 OF 45</div>
-    <div class="q-text">Which block asks the user a question?</div>
-    <div class="options">
-      <label class="option-label"><input type="radio" name="q22" value="A"> A. Ask and wait</label>
-      <label class="option-label"><input type="radio" name="q22" value="B"> B. Move steps</label>
-      <label class="option-label"><input type="radio" name="q22" value="C"> C. Repeat forever</label>
-      <label class="option-label"><input type="radio" name="q22" value="D"> D. Show</label>
-    </div>
-  </div>
-
-  <!-- Q23 -->
-  <div class="question-card">
-    <div class="q-number">QUESTION 23 OF 45</div>
-    <div class="q-text">What does the "forever" block do?</div>
-    <div class="options">
-      <label class="option-label"><input type="radio" name="q23" value="A"> A. Stops the project</label>
-      <label class="option-label"><input type="radio" name="q23" value="B"> B. Repeats forever until stopped</label>
-      <label class="option-label"><input type="radio" name="q23" value="C"> C. Plays music once</label>
-      <label class="option-label"><input type="radio" name="q23" value="D"> D. Changes the background</label>
-    </div>
-  </div>
-
-  <!-- Q24 -->
-  <div class="question-card">
-    <div class="q-number">QUESTION 24 OF 45</div>
-    <div class="q-text">Which tool is used to draw sprites?</div>
-    <div class="options">
-      <label class="option-label"><input type="radio" name="q24" value="A"> A. Paint Editor</label>
-      <label class="option-label"><input type="radio" name="q24" value="B"> B. Music Tool</label>
-      <label class="option-label"><input type="radio" name="q24" value="C"> C. Variable Tool</label>
-      <label class="option-label"><input type="radio" name="q24" value="D"> D. Stage Tool</label>
-    </div>
-  </div>
-
-  <!-- Q25 -->
-  <div class="question-card">
-    <div class="q-number">QUESTION 25 OF 45</div>
-    <div class="q-text">Which block changes the background?</div>
-    <div class="options">
-      <label class="option-label"><input type="radio" name="q25" value="A"> A. Next backdrop</label>
-      <label class="option-label"><input type="radio" name="q25" value="B"> B. Turn right</label>
-      <label class="option-label"><input type="radio" name="q25" value="C"> C. Wait</label>
-      <label class="option-label"><input type="radio" name="q25" value="D"> D. Hide</label>
-    </div>
-  </div>
-
-  <!-- Q26 -->
-  <div class="question-card">
-    <div class="q-number">QUESTION 26 OF 45</div>
-    <div class="q-text">Which category detects keyboard presses?</div>
-    <div class="options">
-      <label class="option-label"><input type="radio" name="q26" value="A"> A. Looks</label>
-      <label class="option-label"><input type="radio" name="q26" value="B"> B. Sensing</label>
-      <label class="option-label"><input type="radio" name="q26" value="C"> C. Motion</label>
-      <label class="option-label"><input type="radio" name="q26" value="D"> D. Sound</label>
-    </div>
-  </div>
-
-  <!-- Q27 -->
-  <div class="question-card">
-    <div class="q-number">QUESTION 27 OF 45</div>
-    <div class="q-text">What is a script in Scratch?</div>
-    <div class="options">
-      <label class="option-label"><input type="radio" name="q27" value="A"> A. A background image</label>
-      <label class="option-label"><input type="radio" name="q27" value="B"> B. A group of coding blocks</label>
-      <label class="option-label"><input type="radio" name="q27" value="C"> C. A sound file</label>
-      <label class="option-label"><input type="radio" name="q27" value="D"> D. A costume</label>
-    </div>
-  </div>
-
-  <!-- Q28 -->
-  <div class="question-card">
-    <div class="q-number">QUESTION 28 OF 45</div>
-    <div class="q-text">Which block can make a sprite invisible?</div>
-    <div class="options">
-      <label class="option-label"><input type="radio" name="q28" value="A"> A. Show</label>
-      <label class="option-label"><input type="radio" name="q28" value="B"> B. Hide</label>
-      <label class="option-label"><input type="radio" name="q28" value="C"> C. Wait</label>
-      <label class="option-label"><input type="radio" name="q28" value="D"> D. Repeat</label>
-    </div>
-  </div>
-
-  <!-- Q29 -->
-  <div class="question-card">
-    <div class="q-number">QUESTION 29 OF 45</div>
-    <div class="q-text">What does the "broadcast" block do?</div>
-    <div class="options">
-      <label class="option-label"><input type="radio" name="q29" value="A"> A. Deletes sprites</label>
-      <label class="option-label"><input type="radio" name="q29" value="B"> B. Sends messages between sprites</label>
-      <label class="option-label"><input type="radio" name="q29" value="C"> C. Changes costumes</label>
-      <label class="option-label"><input type="radio" name="q29" value="D"> D. Stops sounds</label>
-    </div>
-  </div>
-
-  <!-- Q30 -->
-  <div class="question-card">
-    <div class="q-number">QUESTION 30 OF 45</div>
-    <div class="q-text">Which coding concept means making decisions?</div>
-    <div class="options">
-      <label class="option-label"><input type="radio" name="q30" value="A"> A. Looping</label>
-      <label class="option-label"><input type="radio" name="q30" value="B"> B. Variables</label>
-      <label class="option-label"><input type="radio" name="q30" value="C"> C. Conditions</label>
-      <label class="option-label"><input type="radio" name="q30" value="D"> D. Motion</label>
-    </div>
-  </div>
-
-  <!-- ════════════════════ TRUE / FALSE ════════════════════ -->
-  <div class="section-label">True or False — 10 Questions</div>
-
-  <!-- TF1 -->
-  <div class="question-card">
-    <div class="q-number">QUESTION 31 OF 45</div>
-    <div class="q-text">Scratch uses coding blocks instead of typing code.</div>
-    <div class="tf-options">
-      <label class="tf-label"><input type="radio" name="tf1" value="True"> True</label>
-      <label class="tf-label"><input type="radio" name="tf1" value="False"> False</label>
-    </div>
-  </div>
-
-  <!-- TF2 -->
-  <div class="question-card">
-    <div class="q-number">QUESTION 32 OF 45</div>
-    <div class="q-text">Sprites cannot move in Scratch.</div>
-    <div class="tf-options">
-      <label class="tf-label"><input type="radio" name="tf2" value="True"> True</label>
-      <label class="tf-label"><input type="radio" name="tf2" value="False"> False</label>
-    </div>
-  </div>
-
-  <!-- TF3 -->
-  <div class="question-card">
-    <div class="q-number">QUESTION 33 OF 45</div>
-    <div class="q-text">The green flag starts the project.</div>
-    <div class="tf-options">
-      <label class="tf-label"><input type="radio" name="tf3" value="True"> True</label>
-      <label class="tf-label"><input type="radio" name="tf3" value="False"> False</label>
-    </div>
-  </div>
-
-  <!-- TF4 -->
-  <div class="question-card">
-    <div class="q-number">QUESTION 34 OF 45</div>
-    <div class="q-text">A loop repeats instructions.</div>
-    <div class="tf-options">
-      <label class="tf-label"><input type="radio" name="tf4" value="True"> True</label>
-      <label class="tf-label"><input type="radio" name="tf4" value="False"> False</label>
-    </div>
-  </div>
-
-  <!-- TF5 -->
-  <div class="question-card">
-    <div class="q-number">QUESTION 35 OF 45</div>
-    <div class="q-text">Scratch can only make games.</div>
-    <div class="tf-options">
-      <label class="tf-label"><input type="radio" name="tf5" value="True"> True</label>
-      <label class="tf-label"><input type="radio" name="tf5" value="False"> False</label>
-    </div>
-  </div>
-
-  <!-- TF6 -->
-  <div class="question-card">
-    <div class="q-number">QUESTION 36 OF 45</div>
-    <div class="q-text">Variables can store scores.</div>
-    <div class="tf-options">
-      <label class="tf-label"><input type="radio" name="tf6" value="True"> True</label>
-      <label class="tf-label"><input type="radio" name="tf6" value="False"> False</label>
-    </div>
-  </div>
-
-  <!-- TF7 -->
-  <div class="question-card">
-    <div class="q-number">QUESTION 37 OF 45</div>
-    <div class="q-text">The stage is where sprites perform actions.</div>
-    <div class="tf-options">
-      <label class="tf-label"><input type="radio" name="tf7" value="True"> True</label>
-      <label class="tf-label"><input type="radio" name="tf7" value="False"> False</label>
-    </div>
-  </div>
-
-  <!-- TF8 -->
-  <div class="question-card">
-    <div class="q-number">QUESTION 38 OF 45</div>
-    <div class="q-text">Sounds cannot be added in Scratch projects.</div>
-    <div class="tf-options">
-      <label class="tf-label"><input type="radio" name="tf8" value="True"> True</label>
-      <label class="tf-label"><input type="radio" name="tf8" value="False"> False</label>
-    </div>
-  </div>
-
-  <!-- TF9 -->
-  <div class="question-card">
-    <div class="q-number">QUESTION 39 OF 45</div>
-    <div class="q-text">The "forever" block runs only once.</div>
-    <div class="tf-options">
-      <label class="tf-label"><input type="radio" name="tf9" value="True"> True</label>
-      <label class="tf-label"><input type="radio" name="tf9" value="False"> False</label>
-    </div>
-  </div>
-
-  <!-- TF10 -->
-  <div class="question-card">
-    <div class="q-number">QUESTION 40 OF 45</div>
-    <div class="q-text">Scratch is good for beginners learning programming.</div>
-    <div class="tf-options">
-      <label class="tf-label"><input type="radio" name="tf10" value="True"> True</label>
-      <label class="tf-label"><input type="radio" name="tf10" value="False"> False</label>
-    </div>
-  </div>
-
-  <!-- ════════════════════ SHORT ANSWER ════════════════════ -->
-  <div class="section-label">Short Answer — 5 Questions</div>
-
-  <!-- SA1 -->
-  <div class="question-card">
-    <div class="q-number">QUESTION 41 OF 45</div>
-    <div class="q-text">What is a sprite in Scratch?</div>
-    <textarea class="short-answer" id="sa1" placeholder="Write your answer here..."></textarea>
-  </div>
-
-  <!-- SA2 -->
-  <div class="question-card">
-    <div class="q-number">QUESTION 42 OF 45</div>
-    <div class="q-text">What does the green flag do?</div>
-    <textarea class="short-answer" id="sa2" placeholder="Write your answer here..."></textarea>
-  </div>
-
-  <!-- SA3 -->
-  <div class="question-card">
-    <div class="q-number">QUESTION 43 OF 45</div>
-    <div class="q-text">Name one block category in Scratch.</div>
-    <textarea class="short-answer" id="sa3" placeholder="Write your answer here..."></textarea>
-  </div>
-
-  <!-- SA4 -->
-  <div class="question-card">
-    <div class="q-number">QUESTION 44 OF 45</div>
-    <div class="q-text">What is a variable used for?</div>
-    <textarea class="short-answer" id="sa4" placeholder="Write your answer here..."></textarea>
-  </div>
-
-  <!-- SA5 -->
-  <div class="question-card">
-    <div class="q-number">QUESTION 45 OF 45</div>
-    <div class="q-text">What is the purpose of the "repeat" block?</div>
-    <textarea class="short-answer" id="sa5" placeholder="Write your answer here..."></textarea>
-  </div>
-
-  <!-- Submit -->
-  <div class="submit-wrap">
-    <button id="submit-btn" type="button">Submit Quiz</button>
-    <p id="quiz-status"></p>
-  </div>
-
-</div>
-
-<!-- Success Screen -->
-<div id="success-screen">
-  <div class="check">✅</div>
-  <h2>Quiz Submitted!</h2>
-  <p>Your answers have been recorded.<br>You can close this tab now.</p>
-</div>
-
-<script>
-  const SCRIPT_URL = "https://script.google.com/macros/s/AKfycby2bGGtFOufwMHRbg_stSmkK0oWjli6zVNJGfweo7HMfYybMlp0my41oCa9cQNpk3k/exec";
-
-  // Pre-fill name + section from URL params (passed from main page)
-  const params = new URLSearchParams(window.location.search);
-  if (params.get("name"))    document.getElementById("s-name").value    = params.get("name");
-  if (params.get("section")) document.getElementById("s-section").value = params.get("section");
-
-  // Progress bar — update as user answers
-  const totalQ = 45;
-  function updateProgress() {
-    let answered = 0;
-    // MC (q1–q30) + TF (tf1–tf10)
-    ["q1","q2","q3","q4","q5","q6","q7","q8","q9","q10",
-     "q11","q12","q13","q14","q15","q16","q17","q18","q19","q20",
-     "q21","q22","q23","q24","q25","q26","q27","q28","q29","q30",
-     "tf1","tf2","tf3","tf4","tf5","tf6","tf7","tf8","tf9","tf10"
-    ].forEach(name => {
-      if (document.querySelector(`input[name="${name}"]:checked`)) answered++;
-    });
-    // Short answers
-    ["sa1","sa2","sa3","sa4","sa5"].forEach(id => {
-      if (document.getElementById(id).value.trim()) answered++;
-    });
-    document.getElementById("progress-fill").style.width = (answered / totalQ * 100) + "%";
-  }
-
-  document.addEventListener("change", updateProgress);
-  document.addEventListener("input",  updateProgress);
-
-  // Submit
-  document.getElementById("submit-btn").addEventListener("click", async () => {
-    const name    = document.getElementById("s-name").value.trim();
-    const section = document.getElementById("s-section").value;
-
-    if (!name)    { alert("Please enter your full name.");   return; }
-    if (!section) { alert("Please select your section.");    return; }
-
-    // Gather MC answers
-    const mc = {};
-    for (let i = 1; i <= 30; i++) {
-      const sel = document.querySelector(`input[name="q${i}"]:checked`);
-      mc[`MC_Q${i}`] = sel ? sel.value : "";
-    }
-
-    // Gather T/F answers
-    const tf = {};
-    for (let i = 1; i <= 10; i++) {
-      const sel = document.querySelector(`input[name="tf${i}"]:checked`);
-      tf[`TF_Q${i}`] = sel ? sel.value : "";
-    }
-
-    // Gather short answers
-    const sa = {};
-    for (let i = 1; i <= 5; i++) {
-      sa[`SA_Q${i}`] = document.getElementById(`sa${i}`).value.trim();
-    }
-
-    const payload = {
-      name,
-      grade: "5",
-      section,
-      type: "quiz-grade5",
-      ...mc,
-      ...tf,
-      ...sa
-    };
-
-    const btn    = document.getElementById("submit-btn");
-    const status = document.getElementById("quiz-status");
-    btn.disabled   = true;
-    btn.textContent = "Submitting...";
-    status.textContent = "";
-    status.className   = "";
-
-    try {
-      await fetch(SCRIPT_URL, {
-        method: "POST",
-        body: JSON.stringify(payload)
-      });
-
-      // Show success screen
-      document.getElementById("quiz-wrap").style.display    = "none";
-      document.getElementById("success-screen").style.display = "block";
-
-    } catch (err) {
-      status.textContent = "Submission failed. Please try again.";
-      status.className   = "status-error";
-      btn.disabled   = false;
-      btn.textContent = "Submit Quiz";
-    }
-  });
-</script>
+            } catch (err) {
+                status.textContent = "Submission failed. Please try again.";
+                status.className = "status-error";
+                btn.disabled = false;
+                btn.textContent = "Submit Quiz";
+            }
+        });
+    </script>
 
 </body>
+
 </html>
