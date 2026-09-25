@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Code Submission</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="grid-bg"></div>
+  <div class="vignette"></div>
+
+  <div class="main-wrapper">
+    <div class="logo-container">
+      <img src="xcd.png" onerror="this.onerror=null; this.src='logo.png';" alt="International Academy of Iraq">
+    </div>
+
+    <div class="card" id="exam-card" hidden>
+      <h2>Code submission</h2>
+      <form id="form">
+        <div class="grade-banner">
+          <span class="badge" id="badge"></span>
+          <p id="info"></p>
+        </div>
+        <div id="copy-buttons"></div>
+        <hr class="divider">
+
+        <div class="form-group"><input type="text" id="name" placeholder="Full Name" required></div>
+        <div class="form-group">
+          <select id="section" required>
+            <option value="" disabled selected>Select Section</option>
+            <option value="A">Section A</option>
+            <option value="B">Section B</option>
+          </select>
+        </div>
+        <div class="form-group"><textarea id="code" placeholder="Paste your code here..." required></textarea></div>
+        <button type="submit" id="submitBtn">Submit code</button>
+      </form>
+      <p id="status" role="alert"></p>
+      <a class="back" href="index.html" id="back">Back to portal</a>
+    </div>
+  </div>
+
+  <footer class="designer-footer">
+    Created by <span>Ryad Amghar</span><br>ICT Teacher &amp; Technical Support
+  </footer>
+
+  <script src="exams.js"></script>
+  <script>
+    const $ = id => document.getElementById(id);
+    const grade = new URLSearchParams(location.search).get("grade");
+    const exam = EXAMS[grade];
+
+    // Only students who entered the correct code on the portal get in
+    if (!exam || sessionStorage.getItem("examGrade") !== grade) {
+      location.replace("index.html");
+    } else {
+      $("exam-card").hidden = false;
+      $("badge").textContent = "GRADE " + grade;
+      $("info").textContent = exam.info;
+
+      exam.copy.forEach(item => {
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "copy-code-btn";
+        btn.textContent = "📋 " + item.label;
+        btn.onclick = async () => {
+          try {
+            await navigator.clipboard.writeText(item.text());
+            btn.classList.add("copied");
+            btn.textContent = "✅ Copied!";
+          } catch (e) {
+            btn.textContent = "Copy failed. Ask your teacher.";
+          }
+          setTimeout(() => { btn.classList.remove("copied"); btn.textContent = "📋 " + item.label; }, 2500);
+        };
+        $("copy-buttons").appendChild(btn);
+      });
+      if (!exam.copy.length) $("copy-buttons").nextElementSibling.hidden = true;
+
+      $("back").addEventListener("click", e => {
+        if (!confirm("Go back to the portal?\nMake sure you have submitted your work first.")) e.preventDefault();
+      });
+
+      $("form").addEventListener("submit", async e => {
+        e.preventDefault();
+        const btn = $("submitBtn"), status = $("status");
+        btn.disabled = true; btn.textContent = "Submitting...";
+        status.textContent = ""; status.className = "";
+        try {
+          await fetch(SCRIPT_URL, {
+            method: "POST",
+            body: JSON.stringify({
+              name: $("name").value,
+              grade: grade,
+              section: $("section").value,
+              code: $("code").value
+            })
+          });
+          status.textContent = "Submitted successfully! Returning to the portal...";
+          status.className = "ok";
+          $("form").reset();
+          sessionStorage.removeItem("examGrade");
+          setTimeout(() => { location.href = "index.html"; }, 2500);
+        } catch (err) {
+          status.textContent = "Submission failed. Check your connection and try again.";
+          status.className = "err";
+        } finally {
+          if (status.className !== "ok") { btn.disabled = false; btn.textContent = "Submit code"; }
+        }
+      });
+    }
+  </script>
+</body>
+</html>

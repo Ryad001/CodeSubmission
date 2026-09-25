@@ -1,0 +1,393 @@
+:root {
+  --card: rgba(15, 15, 15, 0.8);
+  --glow: rgba(255, 255, 255, 0.6);
+}
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+body {
+  font-family: "Rajdhani", sans-serif;
+  background: #000;
+  color: #fff;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px;
+  overflow-x: hidden;
+}
+.grid-bg {
+  position: fixed;
+  width: 200vw;
+  height: 200vh;
+  bottom: -40%;
+  left: -50%;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.2) 2px, transparent 2px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.2) 2px, transparent 2px);
+  background-size: 50px 50px;
+  transform: perspective(600px) rotateX(60deg);
+  animation: gridMove 3s linear infinite;
+  z-index: -2;
+}
+.vignette {
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(circle at center, transparent 30%, #000 100%);
+  z-index: -1;
+  pointer-events: none;
+}
+@keyframes gridMove {
+  to {
+    background-position: 0 50px;
+  }
+}
+@keyframes slideUp {
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.main-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+  width: 100%;
+  justify-content: center;
+}
+.logo-container {
+  margin-bottom: 30px;
+  background: rgba(255, 255, 255, 0.95);
+  padding: 15px 30px;
+  border-radius: 16px;
+  border: 2px solid #fff;
+  filter: grayscale(100%);
+}
+.logo-container img {
+  max-height: 120px;
+  width: auto;
+  display: block;
+}
+.card {
+  width: 100%;
+  max-width: 550px;
+  background: var(--card);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 16px;
+  padding: 40px;
+  box-shadow: 0 0 40px rgba(255, 255, 255, 0.1);
+  opacity: 0;
+  transform: translateY(30px);
+  animation: slideUp 0.8s ease-out forwards;
+  text-align: left;
+}
+.card.center {
+  text-align: center;
+}
+h2 {
+  text-align: center;
+  font-family: "Orbitron", sans-serif;
+  font-size: 26px;
+  margin-bottom: 30px;
+  text-shadow: 0 0 10px var(--glow);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+.card p.msg {
+  font-size: 18px;
+  color: rgba(255, 255, 255, 0.8);
+  line-height: 1.6;
+}
+.form-group {
+  margin-bottom: 20px;
+}
+input,
+select,
+textarea {
+  width: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 8px;
+  padding: 14px 16px;
+  color: #fff;
+  font-size: 16px;
+  font-family: inherit;
+  outline: none;
+  transition: 0.3s;
+}
+input:focus,
+select:focus,
+textarea:focus {
+  border-color: #fff;
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.4);
+  background: rgba(30, 30, 30, 0.9);
+}
+input::placeholder,
+textarea::placeholder {
+  color: rgba(255, 255, 255, 0.4);
+}
+input.code-input {
+  text-align: center;
+  letter-spacing: 4px;
+  font-family: "Orbitron", sans-serif;
+  text-transform: uppercase;
+}
+textarea {
+  height: 160px;
+  resize: vertical;
+  font-family: "Courier New", monospace;
+  line-height: 1.5;
+}
+select {
+  appearance: none;
+  padding-right: 40px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23fff' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 16px center;
+  background-size: 16px;
+}
+select option {
+  background: #000;
+}
+button {
+  width: 100%;
+  padding: 16px;
+  background: #fff;
+  color: #000;
+  border: 1px solid #fff;
+  border-radius: 8px;
+  font:
+    700 18px "Orbitron",
+    sans-serif;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: 0.3s;
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.4);
+}
+button:hover {
+  background: #e0e0e0;
+  box-shadow: 0 0 30px #fff;
+}
+button:disabled {
+  opacity: 0.6;
+  cursor: wait;
+}
+button:focus-visible,
+a:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 3px;
+}
+.copy-code-btn {
+  background: transparent;
+  color: #fff;
+  border-color: rgba(255, 255, 255, 0.5);
+  font-size: 14px;
+  box-shadow: none;
+  margin-bottom: 10px;
+}
+.copy-code-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+}
+.copy-code-btn.copied {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: #fff;
+}
+.grade-banner {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 10px;
+  padding: 16px 18px;
+  margin-bottom: 14px;
+}
+.badge {
+  background: #fff;
+  color: #000;
+  font:
+    700 10px "Orbitron",
+    sans-serif;
+  letter-spacing: 1px;
+  padding: 4px 10px;
+  border-radius: 20px;
+  white-space: nowrap;
+}
+.grade-banner p {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.75);
+  line-height: 1.4;
+}
+.divider {
+  border: 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  margin: 14px 0 20px;
+}
+#status {
+  text-align: center;
+  margin-top: 20px;
+  font:
+    500 14px "Orbitron",
+    sans-serif;
+  min-height: 21px;
+}
+.ok {
+  font-weight: 700;
+  text-shadow: 0 0 10px #fff;
+}
+.err {
+  font-weight: 700;
+  text-decoration: underline;
+}
+.back {
+  display: block;
+  text-align: center;
+  margin-top: 18px;
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 15px;
+}
+.designer-footer {
+  text-align: center;
+  padding: 20px 0;
+  font:
+    11px "Orbitron",
+    sans-serif;
+  letter-spacing: 2px;
+  color: rgba(255, 255, 255, 0.5);
+  text-transform: uppercase;
+}
+.designer-footer span {
+  color: #fff;
+  font-weight: 700;
+}
+@media (max-width: 480px) {
+  .card {
+    padding: 26px 20px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation: none !important;
+  }
+  .card {
+    opacity: 1;
+    transform: none;
+  }
+}
+/* ── Quiz ── */
+.has-bar {
+  padding-bottom: 84px;
+}
+.namerow {
+  display: grid;
+  grid-template-columns: 1fr 150px;
+  gap: 12px;
+}
+.qmeta {
+  font:
+    500 12px "Orbitron",
+    sans-serif;
+  letter-spacing: 1px;
+  color: rgba(255, 255, 255, 0.6);
+  margin-bottom: 12px;
+}
+.qtext {
+  font-size: 22px;
+  font-weight: 600;
+  line-height: 1.35;
+  margin-bottom: 18px;
+}
+.opt {
+  text-align: left;
+  text-transform: none;
+  font:
+    600 18px/1.3 "Rajdhani",
+    sans-serif;
+  letter-spacing: 0;
+  background: transparent;
+  color: #fff;
+  border-color: rgba(255, 255, 255, 0.35);
+  box-shadow: none;
+  margin-bottom: 10px;
+}
+.opt:hover {
+  background: rgba(255, 255, 255, 0.12);
+  box-shadow: none;
+}
+.opt.sel,
+.opt.sel:hover {
+  background: #fff;
+  color: #000;
+}
+.row {
+  display: flex;
+  gap: 12px;
+  margin-top: 8px;
+}
+.row button {
+  font-size: 15px;
+}
+.row #prev {
+  background: transparent;
+  color: #fff;
+  box-shadow: none;
+}
+.row #prev:hover {
+  background: rgba(255, 255, 255, 0.12);
+}
+.qbar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 50;
+  display: flex;
+  gap: 6px;
+  overflow-x: auto;
+  justify-content: safe center;
+  padding: 10px 12px;
+  background: rgba(0, 0, 0, 0.92);
+  border-top: 1px solid rgba(255, 255, 255, 0.3);
+}
+.qbar button {
+  width: auto;
+  flex: 0 0 auto;
+  min-width: 38px;
+  padding: 8px 6px;
+  font:
+    600 13px "Rajdhani",
+    sans-serif;
+  letter-spacing: 0;
+  text-transform: none;
+  background: transparent;
+  color: #fff;
+  border-color: rgba(255, 255, 255, 0.35);
+  box-shadow: none;
+}
+.qbar button:hover {
+  background: rgba(255, 255, 255, 0.15);
+  box-shadow: none;
+}
+.qbar button.done {
+  background: rgba(255, 255, 255, 0.28);
+}
+.qbar button.cur {
+  background: #fff;
+  color: #000;
+  border-color: #fff;
+}
+@media (max-width: 480px) {
+  .namerow {
+    grid-template-columns: 1fr;
+  }
+  .qtext {
+    font-size: 20px;
+  }
+}

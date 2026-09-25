@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quiz</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="has-bar">
+  <div class="grid-bg"></div>
+  <div class="vignette"></div>
+
+  <div class="main-wrapper">
+    <div class="card" id="quiz-card" hidden>
+      <h2 id="title"></h2>
+      <div class="namerow">
+        <input type="text" id="name" placeholder="Full Name">
+        <select id="section">
+          <option value="" disabled selected>Section</option>
+          <option value="A">Section A</option>
+          <option value="B">Section B</option>
+        </select>
+      </div>
+      <hr class="divider">
+      <p class="qmeta" id="meta"></p>
+      <p class="qtext" id="qtext"></p>
+      <div id="options"></div>
+      <div class="row">
+        <button type="button" id="prev">Back</button>
+        <button type="button" id="next">Next</button>
+      </div>
+      <p id="status" role="alert"></p>
+      <a class="back" href="index.html" id="back">Back to portal</a>
+    </div>
+  </div>
+
+  <nav class="qbar" id="qbar" aria-label="Question navigation" hidden></nav>
+
+  <script src="exams.js"></script>
+  <script src="quizzes.js"></script>
+  <script>
+    const $ = id => document.getElementById(id);
+    const grade = new URLSearchParams(location.search).get("grade");
+    const quiz = QUIZZES[grade];
+
+    if (!quiz || sessionStorage.getItem("examGrade") !== grade) {
+      location.replace("index.html");
+    } else {
+      const Q = quiz.questions, G = quiz.graded, L = "ABCD", KEY = "answers" + grade;
+      let ans = null, cur = 0, done = false;
+      try { ans = JSON.parse(sessionStorage.getItem(KEY)); } catch (e) {}
+      if (!Array.isArray(ans) || ans.length !== Q.length) ans = Q.map(() => null);
+
+      $("quiz-card").hidden = false;
+      $("qbar").hidden = false;
+      $("title").textContent = quiz.title;
+
+      const bar = $("qbar");
+      Q.forEach((q, i) => {
+        const b = document.createElement("button");
+        b.type = "button";
+        b.textContent = (i + 1) + (i >= G ? "★" : "");
+        b.setAttribute("aria-label", "Question " + (i + 1) + (i >= G ? " (bonus)" : ""));
+        b.onclick = () => { cur = i; render(); };
+        bar.appendChild(b);
+      });
+
+      function render() {
+        const q = Q[cur];
+        $("meta").textContent = "Question " + (cur + 1) + " of " + Q.length + (cur >= G ? "  ·  BONUS" : "") +
+          "  ·  " + ans.filter(a => a !== null).length + " answered";
+        $("qtext").textContent = q[0];
+        $("options").innerHTML = "";
+        q[1].forEach((text, i) => {
+          const b = document.createElement("button");
+          b.type = "button";
+          b.className = "opt" + (ans[cur] === i ? " sel" : "");
+          b.textContent = L[i] + ".  " + text;
+          b.onclick = () => {
+            ans[cur] = i;
+            sessionStorage.setItem(KEY, JSON.stringify(ans));
+            render();
+          };
+          $("options").appendChild(b);
+        });
+        [...bar.children].forEach((b, i) => {
+          b.className = (i === cur ? "cur " : "") + (ans[i] !== null ? "done" : "");
+        });
+        bar.children[cur].scrollIntoView({ inline: "center", block: "nearest" });
+        $("prev").disabled = cur === 0;
+        $("next").textContent = cur === Q.length - 1 ? (done ? "Submitted" : "Submit") : "Next";
+        $("next").disabled = done && cur === Q.length - 1;
+      }
+
+      $("prev").onclick = () => { cur--; render(); };
+      $("next").onclick = () => cur < Q.length - 1 ? (cur++, render()) : submit();
+
+      $("back").addEventListener("click", e => {
+        if (!confirm("Go back to the portal?\nMake sure you have submitted your answers first.")) e.preventDefault();
+      });
+
+      async function submit() {
+        const name = $("name").value.trim(), section = $("section").value, status = $("status");
+        status.className = "err";
+        if (!name || !section) {
+          status.textContent = "Enter your name and section at the top first.";
+          $("name").focus();
+          return;
+        }
+        const left = ans.filter(a => a === null).length;
+        if (left && !confirm(left + " question(s) still unanswered. Submit anyway?")) return;
+
+        let g = 0, b = 0;
+        const lines = Q.map((q, i) => {
+          const ok = ans[i] === q[2];
+          if (ok) i < G ? g++ : b++;
+          return (i + 1) + ":" + (ans[i] === null ? "-" : L[ans[i]]) + (ok ? "✓" : "✗");
+        });
+        const code = "Score: " + g + "/" + G + " + " + b + " bonus\n" + lines.join("  ");
+
+        $("next").disabled = true; $("next").textContent = "Submitting...";
+        status.textContent = "";
+        try {
+          await fetch(SCRIPT_URL, { method: "POST", body: JSON.stringify({ name, grade, section, code }) });
+          done = true;
+          sessionStorage.removeItem(KEY);
+          status.textContent = "Submitted successfully! Returning to the portal...";
+          status.className = "ok";
+          $("next").textContent = "Submitted";
+          sessionStorage.removeItem("examGrade");
+          setTimeout(() => { location.href = "index.html"; }, 2500);
+        } catch (err) {
+          status.textContent = "Submission failed. Check your connection and try again.";
+          status.className = "err";
+          $("next").disabled = false; $("next").textContent = "Submit";
+        }
+      }
+      render();
+    }
+  </script>
+
+</body>
+</html>
