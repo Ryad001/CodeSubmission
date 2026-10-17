@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Code Submission</title>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -79,8 +79,17 @@
       });
       if (!exam.copy.length) $("copy-buttons").nextElementSibling.hidden = true;
 
+      let allowLeave = false;
+      window.addEventListener("beforeunload", e => {
+        if (!allowLeave) { e.preventDefault(); e.returnValue = ""; }
+      });
+
       $("back").addEventListener("click", e => {
-        if (!confirm("Go back to the portal?\nMake sure you have submitted your work first.")) e.preventDefault();
+        if (confirm("Go back to the portal?\nMake sure you have submitted your work first.")) {
+          allowLeave = true;
+        } else {
+          e.preventDefault();
+        }
       });
 
       $("form").addEventListener("submit", async e => {
@@ -102,6 +111,7 @@
           status.className = "ok";
           $("form").reset();
           sessionStorage.removeItem("examGrade");
+          allowLeave = true;
           setTimeout(() => { location.href = "index.html"; }, 2500);
         } catch (err) {
           status.textContent = "Submission failed. Check your connection and try again.";

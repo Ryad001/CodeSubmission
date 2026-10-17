@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Exam Portal</title>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -32,9 +32,15 @@
         <div class="form-group">
           <select id="grade" required>
             <option value="" disabled selected>Select your grade</option>
+            <option value="4">Grade 4</option>
+            <option value="5">Grade 5</option>
+            <option value="6">Grade 6</option>
             <option value="7">Grade 7</option>
             <option value="8">Grade 8</option>
             <option value="9">Grade 9</option>
+            <option value="10">Grade 10</option>
+            <option value="11">Grade 11</option>
+            <option value="12">Grade 12</option>
           </select>
         </div>
         <div class="form-group">
@@ -79,7 +85,13 @@
       const exam = EXAMS[grade];
       const status = $("status");
 
-      if (exam && typed === exam.accessCode.toUpperCase()) {
+      if (!exam) {
+        status.textContent = "This grade has no exam open yet. Check with your teacher.";
+        status.className = "err";
+        return;
+      }
+
+      if (typed === exam.accessCode.toUpperCase()) {
         sessionStorage.setItem("examGrade", grade);
         location.href = (exam.page || "exam.html") + "?grade=" + grade;
       } else {
@@ -89,6 +101,5 @@
       }
     });
   </script>
-
 </body>
 </html>

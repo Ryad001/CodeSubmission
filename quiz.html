@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Quiz</title>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
 <body class="has-bar">
@@ -56,38 +56,64 @@
       $("qbar").hidden = false;
       $("title").textContent = quiz.title;
 
+      // A question is multiple-choice if it's an array [text, options, correctIndex].
+      // A question is free-response if it's an object { frq: true, text }.
+      const isFrq = i => !Array.isArray(Q[i]);
+      const isAnswered = i => ans[i] !== null && ans[i] !== undefined && ans[i] !== "";
+
       const bar = $("qbar");
       Q.forEach((q, i) => {
         const b = document.createElement("button");
         b.type = "button";
-        b.textContent = (i + 1) + (i >= G ? "★" : "");
-        b.setAttribute("aria-label", "Question " + (i + 1) + (i >= G ? " (bonus)" : ""));
+        const suffix = isFrq(i) ? "✎" : (i >= G ? "★" : "");
+        b.textContent = (i + 1) + suffix;
+        b.setAttribute("aria-label", "Question " + (i + 1) + (isFrq(i) ? " (free response)" : (i >= G ? " (bonus)" : "")));
         b.onclick = () => { cur = i; render(); };
         bar.appendChild(b);
       });
 
-      function render() {
-        const q = Q[cur];
-        $("meta").textContent = "Question " + (cur + 1) + " of " + Q.length + (cur >= G ? "  ·  BONUS" : "") +
-          "  ·  " + ans.filter(a => a !== null).length + " answered";
-        $("qtext").textContent = q[0];
-        $("options").innerHTML = "";
-        q[1].forEach((text, i) => {
-          const b = document.createElement("button");
-          b.type = "button";
-          b.className = "opt" + (ans[cur] === i ? " sel" : "");
-          b.textContent = L[i] + ".  " + text;
-          b.onclick = () => {
-            ans[cur] = i;
-            sessionStorage.setItem(KEY, JSON.stringify(ans));
-            render();
-          };
-          $("options").appendChild(b);
-        });
+      function updateProgress() {
+        const doneCount = Q.filter((_, i) => isAnswered(i)).length;
+        $("meta").textContent = "Question " + (cur + 1) + " of " + Q.length +
+          (isFrq(cur) ? "  ·  FREE RESPONSE" : (cur >= G ? "  ·  BONUS" : "")) +
+          "  ·  " + doneCount + " answered";
         [...bar.children].forEach((b, i) => {
-          b.className = (i === cur ? "cur " : "") + (ans[i] !== null ? "done" : "");
+          b.className = (i === cur ? "cur " : "") + (isAnswered(i) ? "done" : "");
         });
         bar.children[cur].scrollIntoView({ inline: "center", block: "nearest" });
+      }
+
+      function render() {
+        const q = Q[cur];
+        $("options").innerHTML = "";
+        if (isFrq(cur)) {
+          $("qtext").textContent = q.text;
+          const ta = document.createElement("textarea");
+          ta.className = "frq-input";
+          ta.placeholder = "Type your answer here...";
+          ta.value = typeof ans[cur] === "string" ? ans[cur] : "";
+          ta.oninput = () => {
+            ans[cur] = ta.value;
+            sessionStorage.setItem(KEY, JSON.stringify(ans));
+            updateProgress();
+          };
+          $("options").appendChild(ta);
+        } else {
+          $("qtext").textContent = q[0];
+          q[1].forEach((text, i) => {
+            const b = document.createElement("button");
+            b.type = "button";
+            b.className = "opt" + (ans[cur] === i ? " sel" : "");
+            b.textContent = L[i] + ".  " + text;
+            b.onclick = () => {
+              ans[cur] = i;
+              sessionStorage.setItem(KEY, JSON.stringify(ans));
+              render();
+            };
+            $("options").appendChild(b);
+          });
+        }
+        updateProgress();
         $("prev").disabled = cur === 0;
         $("next").textContent = cur === Q.length - 1 ? (done ? "Submitted" : "Submit") : "Next";
         $("next").disabled = done && cur === Q.length - 1;
@@ -96,8 +122,17 @@
       $("prev").onclick = () => { cur--; render(); };
       $("next").onclick = () => cur < Q.length - 1 ? (cur++, render()) : submit();
 
+      let allowLeave = false;
+      window.addEventListener("beforeunload", e => {
+        if (!allowLeave) { e.preventDefault(); e.returnValue = ""; }
+      });
+
       $("back").addEventListener("click", e => {
-        if (!confirm("Go back to the portal?\nMake sure you have submitted your answers first.")) e.preventDefault();
+        if (confirm("Go back to the portal?\nMake sure you have submitted your answers first.")) {
+          allowLeave = true;
+        } else {
+          e.preventDefault();
+        }
       });
 
       async function submit() {
@@ -108,16 +143,23 @@
           $("name").focus();
           return;
         }
-        const left = ans.filter(a => a === null).length;
+        const left = Q.filter((_, i) => !isAnswered(i)).length;
         if (left && !confirm(left + " question(s) still unanswered. Submit anyway?")) return;
 
-        let g = 0, b = 0;
+        let g = 0, b = 0, frqCount = 0;
         const lines = Q.map((q, i) => {
+          if (isFrq(i)) {
+            frqCount++;
+            const text = typeof ans[i] === "string" && ans[i].trim() ? ans[i].trim() : "(blank)";
+            return (i + 1) + ": " + text;
+          }
           const ok = ans[i] === q[2];
           if (ok) i < G ? g++ : b++;
           return (i + 1) + ":" + (ans[i] === null ? "-" : L[ans[i]]) + (ok ? "✓" : "✗");
         });
-        const code = "Score: " + g + "/" + G + " + " + b + " bonus\n" + lines.join("  ");
+        const bonusNote = b ? (" + " + b + " bonus") : "";
+        const frqNote = frqCount ? ("  ·  " + frqCount + " free-response answer(s) below for manual review") : "";
+        const code = "Score: " + g + "/" + G + bonusNote + frqNote + "\n" + lines.join("  ");
 
         $("next").disabled = true; $("next").textContent = "Submitting...";
         status.textContent = "";
@@ -129,6 +171,7 @@
           status.className = "ok";
           $("next").textContent = "Submitted";
           sessionStorage.removeItem("examGrade");
+          allowLeave = true;
           setTimeout(() => { location.href = "index.html"; }, 2500);
         } catch (err) {
           status.textContent = "Submission failed. Check your connection and try again.";
@@ -139,6 +182,5 @@
       render();
     }
   </script>
-
 </body>
 </html>
