@@ -37,6 +37,28 @@
 
   <nav class="qbar" id="qbar" aria-label="Question navigation" hidden></nav>
 
+  <button type="button" id="asciiToggle" class="ascii-toggle" hidden>ASCII Table</button>
+  <div id="asciiPanel" class="ascii-panel" hidden>
+    <div class="ascii-head">
+      <span>ASCII Reference — Uppercase A–Z</span>
+      <button type="button" id="asciiClose" aria-label="Close">×</button>
+    </div>
+    <table class="ascii-table">
+      <tbody>
+        <tr><td>A</td><td>41</td><td>J</td><td>4A</td><td>S</td><td>53</td></tr>
+        <tr><td>B</td><td>42</td><td>K</td><td>4B</td><td>T</td><td>54</td></tr>
+        <tr><td>C</td><td>43</td><td>L</td><td>4C</td><td>U</td><td>55</td></tr>
+        <tr><td>D</td><td>44</td><td>M</td><td>4D</td><td>V</td><td>56</td></tr>
+        <tr><td>E</td><td>45</td><td>N</td><td>4E</td><td>W</td><td>57</td></tr>
+        <tr><td>F</td><td>46</td><td>O</td><td>4F</td><td>X</td><td>58</td></tr>
+        <tr><td>G</td><td>47</td><td>P</td><td>50</td><td>Y</td><td>59</td></tr>
+        <tr><td>H</td><td>48</td><td>Q</td><td>51</td><td>Z</td><td>5A</td></tr>
+        <tr><td>I</td><td>49</td><td>R</td><td>52</td><td></td><td></td></tr>
+      </tbody>
+    </table>
+    <p class="ascii-note">Lowercase letters: add 20 in hex to the uppercase value (e.g. a = 61).</p>
+  </div>
+
   <script src="exams.js"></script>
   <script src="quizzes.js"></script>
   <script>
@@ -55,6 +77,13 @@
       $("quiz-card").hidden = false;
       $("qbar").hidden = false;
       $("title").textContent = quiz.title;
+
+      // Grade 9's exam needs an always-available ASCII reference.
+      if (grade === "9") {
+        $("asciiToggle").hidden = false;
+        $("asciiToggle").onclick = () => { $("asciiPanel").hidden = false; };
+        $("asciiClose").onclick = () => { $("asciiPanel").hidden = true; };
+      }
 
       // A question is multiple-choice if it's an array [text, options, correctIndex].
       // A question is free-response if it's an object { frq: true, text }.

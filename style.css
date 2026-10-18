@@ -104,3 +104,16 @@ button:focus-visible,a:focus-visible{outline:2px solid var(--gold);outline-offse
 .qbar button.cur{background:var(--gold-bright);color:#2e1e0f;border-color:var(--gold-bright)}
 @media(max-width:480px){.namerow{grid-template-columns:1fr}.qtext{font-size:20px}}
 .frq-input{height:140px;resize:vertical;font-family:'Quicksand',sans-serif;font-size:17px;line-height:1.4;background:#fffaf0;color:var(--ink)}
+
+/* ── ASCII reference (Grade 9) ── */
+.ascii-toggle{position:fixed;top:18px;right:18px;z-index:60;width:auto;padding:10px 16px;font:700 13px 'Cinzel',serif;letter-spacing:.5px;background:linear-gradient(180deg,var(--gold-bright),var(--gold));color:#2e1e0f;border:1px solid var(--gold);border-radius:10px;box-shadow:0 4px 16px rgba(185,121,47,.35)}
+.ascii-panel{position:fixed;top:64px;right:18px;z-index:60;width:280px;max-width:calc(100vw - 36px);background:var(--card);border:1px solid var(--card-edge);border-radius:14px;padding:16px;box-shadow:0 12px 36px rgba(0,0,0,.45);color:var(--ink)}
+.ascii-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;font:700 13px 'Quicksand',sans-serif;color:var(--gold)}
+.ascii-head button{width:auto;padding:0 6px;background:transparent;border:none;color:var(--ink-dim);font-size:20px;line-height:1;box-shadow:none}
+.ascii-head button:hover{color:var(--err)}
+.ascii-table{width:100%;border-collapse:collapse;font:600 13px 'Quicksand',sans-serif}
+.ascii-table td{padding:4px 6px;text-align:center;border-bottom:1px solid var(--card-edge)}
+.ascii-table td:nth-child(odd){color:var(--ink-dim);text-align:right;padding-right:4px}
+.ascii-table td:nth-child(even){text-align:left;padding-left:4px;color:var(--gold)}
+.ascii-note{margin-top:10px;font-size:11.5px;color:var(--ink-dim);line-height:1.4}
+@media(max-width:480px){.ascii-toggle{padding:8px 12px;font-size:12px}.ascii-panel{width:calc(100vw - 36px)}}
