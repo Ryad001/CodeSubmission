@@ -37,10 +37,10 @@
 
   <nav class="qbar" id="qbar" aria-label="Question navigation" hidden></nav>
 
-  <button type="button" id="asciiToggle" class="ascii-toggle" hidden>ASCII Table</button>
+  <button type="button" id="asciiToggle" class="ascii-toggle" hidden>Reference Tables</button>
   <div id="asciiPanel" class="ascii-panel" hidden>
     <div class="ascii-head">
-      <span>ASCII Reference — Uppercase A–Z</span>
+      <span>ASCII — Uppercase A–Z</span>
       <button type="button" id="asciiClose" aria-label="Close">×</button>
     </div>
     <table class="ascii-table">
@@ -57,6 +57,19 @@
       </tbody>
     </table>
     <p class="ascii-note">Lowercase letters: add 20 in hex to the uppercase value (e.g. a = 61).</p>
+
+    <hr class="ascii-divider">
+
+    <div class="ascii-head"><span>Hex Digit Reference</span></div>
+    <table class="ascii-table hex-table">
+      <tbody>
+        <tr><td>0</td><td>0000</td><td>4</td><td>0100</td><td>8</td><td>1000</td><td>C</td><td>1100</td></tr>
+        <tr><td>1</td><td>0001</td><td>5</td><td>0101</td><td>9</td><td>1001</td><td>D</td><td>1101</td></tr>
+        <tr><td>2</td><td>0010</td><td>6</td><td>0110</td><td>A</td><td>1010</td><td>E</td><td>1110</td></tr>
+        <tr><td>3</td><td>0011</td><td>7</td><td>0111</td><td>B</td><td>1011</td><td>F</td><td>1111</td></tr>
+      </tbody>
+    </table>
+    <p class="ascii-note">Each hex digit (0–F) = one group of 4 binary bits.</p>
   </div>
 
   <script src="exams.js"></script>
