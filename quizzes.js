@@ -5,27 +5,32 @@ const QUIZZES = {
     title: "C++ Midterm Exam",
     graded: 20,
     questions: [
-      ["What is the purpose of cout in C++?", ["To receive input from the user", "To display output on the screen", "To create a variable", "To repeat instructions"], 1],
-      ["What will the following code display?\ncout << \"Hello\";", ["Hello", "\"Hello\" including quotation marks", "cout", "Nothing"], 0],
-      ["What will the following code display?\ncout << 10;", ["cout", "\"10\" including quotation marks", "10", "Nothing"], 2],
-      ["What will the following code display?\ncout << \"Age: \" << 12;", ["Age: 12", "Age: 12 on two separate lines", "Age: 12 with quotation marks around everything", "An error"], 0],
-      ["What is a variable in C++?", ["A device used to store files", "A named location used to store data", "An instruction that displays output", "A type of computer"], 1],
-      ["Which data type is best for storing a whole number, such as 15?", ["bool", "float", "int", "double"], 2],
-      ["Which data type can store a decimal number, such as 3.5?", ["int", "float", "bool", "cout"], 1],
-      ["Which data type stores either true or false?", ["int", "double", "float", "bool"], 3],
-      ["What value is stored in the variable age?\nint age = 13;", ["int", "age", "13", "0"], 2],
-      ["Which is a correct way to declare an integer variable with the value 5?", ["number int = 5;", "int number = 5;", "number = int 5;", "int = number 5;"], 1],
-      ["What is the purpose of cin in C++?", ["To display information on the screen", "To receive input from the user", "To calculate the remainder", "To declare a variable"], 1],
-      ["Which operator is used with cin to receive input?", ["<<", "+", ">>", "="], 2],
-      ["What value will be stored in num if the user enters 7?\nint num;\ncin >> num;", ["0", "7", "num", "Nothing can be entered"], 1],
-      ["One folder contains 8 files, and another contains 4 files. Which operation calculates the total number of files?", ["8 - 4", "8 + 4", "8 * 4", "8 / 4"], 1],
-      ["A computer has 16 GB of available storage. A program uses 5 GB. How much storage remains?", ["11 GB", "21 GB", "80 GB", "5 GB"], 0],
-      ["A computer processes 6 tasks in each batch. How many tasks does it process in 4 batches?", ["10", "18", "24", "2"], 2],
-      ["A 20 MB file is divided equally into 5 smaller files. What is the size of each smaller file?", ["4 MB", "5 MB", "15 MB", "25 MB"], 0],
-      ["A computer distributes 17 items among 4 folders. What does the C++ expression 17 % 4 return?", ["4", "1", "4.25", "17"], 1],
-      ["What will the following code display?\nint x = 5;\nx = 8;\ncout << x;", ["5", "8", "13", "0"], 1],
-      ["What will the following code display?\nint a = 4;\nint b = 3;\ncout << a + b;", ["1", "12", "7", "43"], 2]
-    ]
+  // Fill in the blank: input / output
+  ["Fill in the blank to display text on the screen:\n______ << \"Enter the first number: \";", ["cin", "cout", "endl", "double"], 1],
+  ["Fill in the blank to get input from the user:\n______ >> number1;", ["cout", "endl", "cin", "int"], 2],
+  ["Fill in the blank with the correct operator to receive input:\ncin ______ number2;", ["<<", ">>", "=", "+"], 1],
+  ["Fill in the blank to link the text with the calculation:\ncout << \"Sum: \" ______ number1 + number2;", [">>", "=", "<<", "*"], 2],
+  ["Fill in the blank to store the user's input in the quantity variable:\ncin >> ______;", ["productName", "price", "onSale", "quantity"], 3],
+  ["Fill in the blank to display the value stored in price:\ncout << \"Price: $\" << ______ << endl;", ["\"price\"", "price", "cin", "double"], 1],
+  ["Fill in the blank to calculate the total cost:\ncout << price ______ quantity;", ["+", "-", "*", "/"], 2],
+  ["Fill in the blank to move to the next line after printing:\ncout << \"Hello\" << ______;", ["endl", "cin", "int", "bool"], 0],
+
+  // Types of variables
+  ["Which data type is best for storing a product name such as \"Pen\"?", ["int", "double", "string", "bool"], 2],
+  ["Which data type is best for storing a quantity such as 3?", ["string", "int", "bool", "double"], 1],
+  ["Which data type is best for storing a price such as 4.75?", ["int", "bool", "string", "double"], 3],
+  ["Which data type is best for storing true or false (like onSale)?", ["bool", "int", "double", "string"], 0],
+  ["Fill in the blank to declare a variable that can store a decimal number:\n______ number1;", ["int", "string", "double", "bool"], 2],
+  ["In the calculator program, why were number1 and number2 declared as double?", ["To store text", "To allow decimal numbers", "To store true or false", "To display output"], 1],
+
+  // Output of small code
+  ["What will the following code display?\nint a = 10;\nint b = 4;\ncout << a - b;", ["14", "6", "40", "2"], 1],
+  ["What will the following code display?\ncout << \"Total: \" << 5 * 3;", ["Total: 15", "Total: 8", "Total: 5 * 3", "15"], 0],
+  ["What will the following code display?\ndouble x = 7;\ndouble y = 2;\ncout << x / y;", ["3", "3.5", "14", "9"], 1],
+  ["What will the following code display?\nstring name = \"Sara\";\ncout << \"Hi \" << name;", ["Hi name", "Hi Sara", "Hi \"Sara\"", "Sara"], 1],
+  ["What will the following code display?\nint q = 2;\nq = 6;\ncout << q;", ["2", "8", "6", "4"], 2],
+  ["What will the following code display?\nbool onSale = 1;\ncout << onSale;", ["true", "1", "0", "onSale"], 1]
+]
   },
 
   8: {
