@@ -37,27 +37,30 @@ const QUIZZES = {
     title: "HTML and CSS",
     graded: 20,
     questions: [
-      ["Which HTML tag creates the largest heading by default?", ["<h6>", "<head>", "<h1>", "<p>"], 2],
-      ["Which HTML tag displays an image on a webpage?", ["<img>", "<image>", "<a>", "<p>"], 0],
-      ["What is the purpose of the <a> tag?", ["To create a paragraph", "To create a hyperlink", "To display an image", "To change text color"], 1],
-      ["Which tag is used to create a paragraph?", ["<h1>", "<text>", "<p>", "<paragraph>"], 2],
-      ["What will the following HTML code display?\n<h2>My School</h2>\n<p>Welcome to our website.</p>", ["A heading followed by a paragraph", "Two headings", "An image and a paragraph", "A hyperlink followed by a heading"], 0],
-      ["In the following code, what is the purpose of href?\n<a href=\"https://www.google.com\">Google</a>", ["It changes the text color.", "It specifies the hyperlink destination.", "It displays an image.", "It changes the heading size."], 1],
-      ["Which CSS property changes the color of text?", ["background-color", "font-size", "color", "text-style"], 2],
-      ["What does the following code do?\n<p style=\"color: red;\">Hello!</p>", ["Displays the text with a red background", "Displays the text in red", "Makes the text larger", "Creates a red heading"], 1],
-      ["Which inline style changes an element's background color to yellow?", ["color: yellow;", "font-size: yellow;", "background-color: yellow;", "text-color: yellow;"], 2],
-      ["What is the purpose of the style attribute in HTML?", ["To apply CSS directly to an HTML element", "To create hyperlinks", "To insert images", "To organize files on a computer"], 0],
-      ["What will the following code display?\n<h1 style=\"color: blue; font-size: 30px;\">ICT</h1>", ["A blue heading with a font size of 30 pixels", "A heading with a blue background", "A paragraph with blue text", "A hyperlink labeled ICT"], 0],
-      ["Which element usually contains introductory content at the top of a webpage?", ["<footer>", "<header>", "<main>", "<article>"], 1],
-      ["Which element is most appropriate for a group of navigation links?", ["<nav>", "<section>", "<footer>", "<main>"], 0],
-      ["Which element contains the main content of a webpage?", ["<header>", "<nav>", "<main>", "<footer>"], 2],
-      ["A webpage groups related information about school activities. Which element is most appropriate?", ["<section>", "<img>", "<a>", "<nav>"], 0],
-      ["Which semantic element is suitable for an independent blog post that can stand on its own?", ["<nav>", "<article>", "<footer>", "<header>"], 1],
-      ["Where would you normally place copyright information at the bottom of a webpage?", ["<main>", "<section>", "<header>", "<footer>"], 3],
-      ["Consider the following code. What color will the paragraph text be?\n<p style=\"color: green; background-color: yellow;\">\n  Welcome to ICT!\n</p>", ["Yellow text on a green background", "Green text on a yellow background", "Green text on a green background", "Black text on a yellow background"], 1],
-      ["A school webpage contains the school name, navigation links, main information, and copyright details. Which option correctly matches the elements to their purposes?", ["<header> for the school name, <nav> for links, <main> for main information, <footer> for copyright", "<footer> for the school name, <main> for links, <nav> for copyright", "<article> for all content, <img> for navigation links", "<section> for links, <footer> for the main information, <nav> for copyright"], 0],
-      ["What is the main purpose of semantic HTML elements?", ["To make every text element a different color", "To organize webpage content according to its meaning and purpose", "To replace all CSS styles", "To automatically insert images and hyperlinks"], 1]
-    ]
+  // About the template
+  ["In the template, which element is at the very top of the page?", ["<footer>", "<nav>", "<header>", "<main>"], 2],
+  ["In the template, which element comes directly below the header?", ["<nav>", "<footer>", "<article>", "<section>"], 0],
+  ["In the template, which element is at the very bottom of the page?", ["<header>", "<main>", "<nav>", "<footer>"], 3],
+  ["In the template, which big element holds the section and the article inside it?", ["<nav>", "<main>", "<header>", "<footer>"], 1],
+  ["In the template, which element is placed directly inside <main>?", ["<footer>", "<nav>", "<header>", "<section>"], 3],
+  ["In the template, which element is placed inside <section>?", ["<article>", "<header>", "<footer>", "<nav>"], 0],
+  ["What is the correct order of the template elements from top to bottom?", ["<footer>, <main>, <nav>, <header>", "<header>, <nav>, <main>, <footer>", "<nav>, <header>, <footer>, <main>", "<main>, <header>, <nav>, <footer>"], 1],
+  ["In the template, which element is NOT inside <main>?", ["<section>", "<article>", "<footer>", "All of them are inside <main>"], 2],
+  ["Where would you put the website's name and logo in this template?", ["<footer>", "<header>", "<article>", "<section>"], 1],
+  ["Where would you put the links Home, About and Contact in this template?", ["<nav>", "<footer>", "<article>", "<main>"], 0],
+  ["In the template, a single news story is shown inside the section. Which element is best for it?", ["<nav>", "<header>", "<footer>", "<article>"], 3],
+  ["Which code matches the structure of the template?", ["<main><header></header><footer></footer></main>", "<header></header><nav></nav><main><section><article></article></section></main><footer></footer>", "<footer></footer><nav></nav><main></main><header></header>", "<article><section><main></main></section></article>"], 1],
+
+  // Only properties from the example set
+  ["Which code makes the paragraph text red?", ["<p style=\"background-color: red;\">Hello</p>", "<p style=\"font-size: red;\">Hello</p>", "<p style=\"color: red;\">Hello</p>", "<p style=\"red: color;\">Hello</p>"], 2],
+  ["What does this code do?\n<p style=\"background-color: orange;\">Hi</p>", ["Makes the text orange", "Makes the paragraph background orange", "Makes the text bigger", "Creates an orange heading"], 1],
+  ["Fill in the blank to make the heading text bigger:\n<h1 style=\"______: 40px;\">Welcome</h1>", ["color", "background-color", "font-size", "href"], 2],
+  ["What will this code display?\n<h1 style=\"color: purple;\">Nav Bar</h1>", ["A heading with purple text", "A heading with a purple background", "A purple paragraph", "A purple image"], 0],
+  ["What does src do in this code?\n<img src=\"school.png\">", ["It changes the image color", "It tells the browser which image file to show", "It makes the image bigger", "It creates a link"], 1],
+  ["Which symbol separates a property from its value in a style attribute?", ["Semicolon (;)", "Equals sign (=)", "Colon (:)", "Comma (,)"], 2],
+  ["Which code makes a link that goes to Google?", ["<a src=\"https://www.google.com\">Google</a>", "<a href=\"https://www.google.com\">Google</a>", "<p href=\"https://www.google.com\">Google</p>", "<img href=\"https://www.google.com\">Google</img>"], 1],
+  ["What will this code display?\n<p style=\"color: white; background-color: blue;\">ICT</p>", ["Blue text on a white background", "White text on a blue background", "Blue text on a blue background", "White text on a white background"], 1]
+]
   },
 
   9: {
