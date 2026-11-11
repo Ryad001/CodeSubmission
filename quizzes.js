@@ -64,26 +64,29 @@ const QUIZZES = {
     title: "Number Systems and ASCII",
     graded: 15,
     questions: [
-      ["What is the binary representation of decimal 13?", ["1011", "1101", "1110", "1001"], 1],
-      ["What is the decimal value of binary 10110?", ["20", "21", "22", "24"], 2],
-      ["Convert binary 11001100 to hexadecimal.", ["CC", "CD", "BC", "C3"], 0],
-      ["What is the binary representation of hexadecimal 2A?", ["00101010", "00101100", "00100101", "00111010"], 0],
-      ["Convert hexadecimal 15 to decimal by converting it to binary first.", ["19", "20", "21", "25"], 2],
-      ["Which binary place value is immediately to the left of 16?", ["8", "24", "32", "64"], 2],
-      ["Which of the following is a valid hexadecimal digit?", ["G", "H", "F", "X"], 2],
-      ["Why do we group binary digits into groups of four when converting binary to hexadecimal?", ["Each group of four bits represents one hexadecimal digit.", "Each group of four bits represents one decimal digit.", "Four bits always equal four bytes.", "It makes the binary number smaller."], 0],
-      ["What is ASCII used for?", ["Storing only images", "Representing characters using numerical values", "Increasing internet speed", "Controlling computer hardware temperature"], 1],
-      ["Which hexadecimal ASCII value represents the uppercase letter A?", ["41", "61", "42", "31"], 0],
-      ["A student decodes the hexadecimal ASCII values 48 49. Which word do they get?", ["HI", "HE", "IN", "IT"], 0],
-      ["Why do uppercase A and lowercase a have different ASCII values?", ["They are stored in different file formats.", "ASCII assigns different numerical values to uppercase and lowercase letters.", "Lowercase letters use decimal, while uppercase letters use binary.", "Uppercase letters cannot be represented in binary."], 1],
-      ["How many different values can be represented using 4 bits?", ["4", "8", "16", "32"], 2],
-      ["What is the minimum number of bits required to represent at least 50 different values?", ["4 bits", "5 bits", "6 bits", "7 bits"], 2],
-      ["How many bits are in 3 bytes?", ["8", "16", "24", "32"], 2],
-      { frq: true, text: "Explain the difference between binary and decimal number systems. State which digits each system uses and why computers use binary." },
-      { frq: true, text: "Hexadecimal: a) Which symbols are used in the hexadecimal number system? b) Explain why hexadecimal is useful when working with long binary numbers. c) How many binary bits does one hexadecimal digit represent?" },
-      { frq: true, text: "Using an ASCII table, encode the word CAT into hexadecimal ASCII values. Write the hexadecimal value for each letter in the correct order." },
-      { frq: true, text: "Using an ASCII table, decode the following hexadecimal ASCII values into a word: 42 4F 59. Write the decoded word." },
-      { frq: true, text: "Bits and Bytes: a) Explain the difference between a bit and a byte. b) How many bits are in one byte? c) A file contains 5 bytes. Explain how you would calculate the total number of bits." }
-    ]
+  // Images & Pixels (slides 4, 5, 7, 8, 9, 12, 13)
+  ["What is a pixel?", ["A type of file", "The smallest square of colour in an image", "A kind of screen", "A binary number"], 1],
+  ["An image is made of a grid of rows and columns. What is each square in the grid called?", ["A byte", "A bit", "A pixel", "A wave"], 2],
+  ["In the 8 × 8 heart image, what does a 1 mean?", ["A background pixel", "A coloured pixel", "An empty row", "An error"], 1],
+  ["How many bits per pixel does the heart image use?", ["1 bit", "8 bits", "24 bits", "64 bits"], 0],
+  ["The same picture is saved as 4 × 4, 8 × 8 and 16 × 16. Which one shows the most detail?", ["4 × 4", "8 × 8", "16 × 16", "They are all the same"], 2],
+  ["How many pixels are in a 20 × 10 image?", ["100", "200", "30", "2,000"], 1],
+  ["A 800 × 600 image has how many pixels?", ["1,400", "48,000", "480,000", "4,800,000"], 2],
+  ["Why does a small image look blocky when it is enlarged?", ["The pixels get bigger and no new detail appears", "The computer adds extra detail", "The colours change", "The file becomes sharper"], 0],
+  ["To get a sharper picture, what do you need?", ["To zoom in", "A bigger screen", "More pixels when the picture is captured", "Fewer colours"], 2],
+  ["What does RGB stand for?", ["Red, Green, Blue", "Red, Grey, Black", "Right, Green, Blue", "Round, Green, Bright"], 0],
+  ["How many numbers does a colour pixel store in RGB?", ["1", "2", "3", "4"], 2],
+  ["In RGB, each number goes from what range?", ["0 to 9", "0 to 255", "0 to 100", "0 to 1000"], 1],
+  ["Which RGB values make yellow?", ["255, 255, 0", "255, 255, 255", "0, 0, 0", "0, 0, 255"], 0],
+  ["Which change gives an image the most detail?", ["A bigger screen", "Fewer colours", "Zooming in", "More pixels"], 3],
+
+  // Audio / Sampling (slides 12, 13)
+  ["Is a vinyl record analog or digital?", ["Digital", "Analog", "Binary", "Neither"], 1],
+  ["Is an MP3 file analog or digital?", ["Analog", "Both", "Neither", "Digital"], 3],
+  ["Is an analogue clock with hands analog or digital?", ["Analog", "Digital", "Binary", "A list of numbers"], 0],
+  ["A 3-bit sound sample has the value 5. What is it in binary?", ["010", "110", "101", "111"], 2],
+  ["A 3-bit sound was stored as: 2, 5, 7, 5, 2, 0. Which sample has the highest value?", ["0", "7", "5", "2"], 1],
+  ["What does an ADC (analog-to-digital converter) do?", ["Plays sound", "Makes the wave louder", "Converts an analog signal to numbers", "Compresses a file"], 2]
+]
   }
 };
