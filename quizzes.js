@@ -68,7 +68,7 @@ const QUIZZES = {
   ["What is a pixel?", ["A type of file", "The smallest square of colour in an image", "A kind of screen", "A binary number"], 1],
   ["An image is made of a grid of rows and columns. What is each square in the grid called?", ["A byte", "A bit", "A pixel", "A wave"], 2],
   ["In the 8 × 8 heart image, what does a 1 mean?", ["A background pixel", "A coloured pixel", "An empty row", "An error"], 1],
-  ["How many bits per pixel does the heart image use?", ["1 bit", "8 bits", "24 bits", "64 bits"], 0],
+  ["This 8 × 8 heart image is stored as 0s and 1s:\n01100110\n11111111\n11111111\n11111111\n01111110\n00111100\n00011000\n00000000\nWhat does each 0 mean in this image?", ["A coloured pixel", "A background pixel", "A new row", "An error"], 1],
   ["The same picture is saved as 4 × 4, 8 × 8 and 16 × 16. Which one shows the most detail?", ["4 × 4", "8 × 8", "16 × 16", "They are all the same"], 2],
   ["How many pixels are in a 20 × 10 image?", ["100", "200", "30", "2,000"], 1],
   ["A 800 × 600 image has how many pixels?", ["1,400", "48,000", "480,000", "4,800,000"], 2],
@@ -77,7 +77,7 @@ const QUIZZES = {
   ["What does RGB stand for?", ["Red, Green, Blue", "Red, Grey, Black", "Right, Green, Blue", "Round, Green, Bright"], 0],
   ["How many numbers does a colour pixel store in RGB?", ["1", "2", "3", "4"], 2],
   ["In RGB, each number goes from what range?", ["0 to 9", "0 to 255", "0 to 100", "0 to 1000"], 1],
-  ["Which RGB values make yellow?", ["255, 255, 0", "255, 255, 255", "0, 0, 0", "0, 0, 255"], 0],
+  ["Which RGB values make white?", ["0, 0, 0", "0, 0, 255", "255, 255, 0", "255, 255, 255"], 3],
   ["Which change gives an image the most detail?", ["A bigger screen", "Fewer colours", "Zooming in", "More pixels"], 3],
 
   // Audio / Sampling (slides 12, 13)
